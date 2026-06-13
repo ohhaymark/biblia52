@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="es-419">
+<head>
+<meta charset="UTF-8">
+<title>Guía de Lectura Cronológica de la Biblia en 52 Semanas</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1a3a2a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Biblia52">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/svg+xml" href="icon-192.svg">
+<link rel="apple-touch-icon" href="icon-192.svg">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --prim:#1a3a2a;--gold:#b8963e;--gold-l:#d4af5a;
+  --cream:#f9f5ed;--cream2:#f0e8d4;--text:#2c2218;
+  --muted:#6b5a42;--border:#d4c4a0;--done-bg:#eaf5ee;--done-border:#4a9e6a;
+  --tap:44px;
+}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;}
+body{font-family:'Source Serif 4',Georgia,serif;background:var(--cream);color:var(--text);line-height:1.6;min-height:100vh;}
+
+/* HERO */
+.hero{background:var(--prim);padding:2.5rem 1.25rem 2rem;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 30px,rgba(184,150,62,0.04) 30px,rgba(184,150,62,0.04) 31px);}
+.hero-label{font-size:11px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:.75rem;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(24px,6vw,34px);color:#fff;line-height:1.2;margin-bottom:.5rem;font-weight:700;}
+.hero h1 em{color:var(--gold-l);font-style:italic;}
+.hero-sub{color:rgba(255,255,255,0.7);font-size:clamp(13px,3.5vw,15px);max-width:480px;margin:0 auto 1.25rem;}
+.badges{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;}
+.badge{background:rgba(184,150,62,0.15);border:1px solid rgba(184,150,62,0.35);color:var(--gold-l);font-size:11px;padding:4px 11px;border-radius:20px;letter-spacing:.5px;}
+.progress-bar-wrap{background:rgba(255,255,255,0.08);border-radius:8px;height:8px;margin:1.25rem auto 0;max-width:min(320px,85vw);overflow:hidden;}
+.progress-bar-fill{background:var(--gold);height:100%;border-radius:8px;transition:width .5s ease;}
+.progress-label{color:rgba(255,255,255,0.6);font-size:12px;margin-top:.4rem;}
+
+/* TABS */
+.tabs{display:flex;border-bottom:2px solid var(--border);background:#fff;overflow-x:auto;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,0.07);-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab-btn{flex:0 0 auto;min-width:72px;padding:0 .65rem;height:var(--tap);font-size:13px;font-family:'Source Serif 4',serif;color:var(--muted);background:none;border:none;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:color .2s,border-color .2s;-webkit-tap-highlight-color:transparent;}
+.tab-btn.active{color:var(--prim);border-bottom-color:var(--gold);font-weight:600;}
+
+/* TAB CONTENT */
+.tab-content{display:none;padding:1.25rem;}
+.tab-content.active{display:block;}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(17px,4vw,20px);color:var(--prim);margin-bottom:4px;}
+.section-sub{font-size:13px;color:var(--muted);margin-bottom:1.25rem;}
+
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1.25rem;}
+.stat-card{background:#fff;border:1px solid var(--border);border-radius:8px;padding:.75rem .5rem;text-align:center;}
+.stat-num{font-family:'Playfair Display',serif;font-size:clamp(20px,5vw,26px);color:var(--prim);font-weight:700;line-height:1;}
+.stat-label{font-size:10px;color:var(--muted);margin-top:3px;letter-spacing:.5px;text-transform:uppercase;}
+
+/* ── WEEK CARD ── */
+.week-item{background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,0.08);border:1px solid var(--border);}
+.week-card-header{padding:.9rem 1.25rem .7rem;border-bottom:3px solid var(--gold);cursor:pointer;-webkit-tap-highlight-color:transparent;background:var(--prim);}
+.week-card-header:active{opacity:.9;}
+.week-num-label{font-family:'Playfair Display',serif;font-size:clamp(15px,3.5vw,18px);font-weight:600;color:#fff;letter-spacing:.5px;line-height:1;}
+.week-item.week-done .week-num-label{color:var(--gold-l);}
+.week-motivational{font-size:clamp(11px,3vw,12px);font-weight:400;color:rgba(255,255,255,0.7);font-style:italic;margin-top:.35rem;line-height:1.45;}
+.week-progress-pill{display:inline-block;font-size:10px;font-weight:700;color:var(--gold-l);background:rgba(255,255,255,0.1);border:1px solid rgba(184,150,62,0.4);border-radius:20px;padding:2px 10px;margin-top:.55rem;letter-spacing:.3px;}
+.week-item.week-done .week-progress-pill{background:rgba(74,158,106,0.2);border-color:var(--done-border);color:#7fd4a0;}
+
+/* ── DAY ROWS ── */
+.week-days{display:none;}
+.week-item.open .week-days{display:block;}
+
+.day-row{display:grid;grid-template-columns:1fr auto 44px;align-items:stretch;border-bottom:1px solid var(--border);cursor:pointer;min-height:56px;-webkit-tap-highlight-color:transparent;}
+.day-row:last-child{border-bottom:none;}
+.day-row:nth-child(odd){background:var(--cream);}
+.day-row:nth-child(even){background:var(--cream2);}
+.day-row.day-done{background:var(--done-bg)!important;}
+.day-row:active{filter:brightness(.97);}
+
+.day-main{display:flex;flex-direction:column;justify-content:center;padding:.65rem 1rem;}
+.day-label{font-family:'Source Serif 4',serif;font-size:clamp(10px,2.8vw,11px);font-weight:700;color:var(--prim);text-transform:uppercase;letter-spacing:.8px;margin-bottom:2px;line-height:1;}
+.day-row.day-done .day-label{color:var(--done-border);}
+.day-reading{font-family:'Source Serif 4',serif;font-size:clamp(13px,3.5vw,14px);color:var(--text);line-height:1.3;font-weight:600;margin-bottom:3px;}
+.day-row.day-done .day-reading{color:var(--muted);text-decoration:line-through;}
+.day-note{font-family:'Source Serif 4',serif;font-size:clamp(11px,2.8vw,12px);color:var(--muted);font-style:italic;line-height:1.4;}
+.day-row.day-done .day-note{color:var(--done-border);opacity:.7;}
+
+.day-divider{width:1px;background:var(--border);align-self:stretch;}
+
+.day-check{width:44px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.day-check-inner{width:22px;height:22px;border:2px solid var(--border);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:14px;background:#fff;transition:all .2s;}
+.day-row.day-done .day-check-inner{background:var(--done-border);border-color:var(--done-border);color:#fff;}
+
+/* TIMELINE */
+.timeline{position:relative;padding-left:2rem;}
+.timeline::before{content:'';position:absolute;left:.75rem;top:0;bottom:0;width:2px;background:var(--border);}
+.tl-item{position:relative;margin-bottom:1.5rem;}
+.tl-dot{position:absolute;left:-1.55rem;top:.25rem;width:14px;height:14px;border-radius:50%;background:var(--gold);border:3px solid var(--cream);}
+.tl-era{font-family:'Playfair Display',serif;font-size:clamp(14px,3.5vw,15px);color:var(--prim);font-weight:600;margin-bottom:3px;}
+.tl-date{font-size:11px;color:var(--gold);font-weight:600;letter-spacing:.5px;margin-bottom:5px;}
+.tl-detail{font-size:clamp(12px,3vw,13px);color:var(--text);line-height:1.65;background:var(--cream);border-radius:6px;padding:.6rem .85rem;border-left:3px solid var(--gold);}
+.tl-books{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;}
+.tl-book{background:var(--cream2);border:1px solid var(--border);color:var(--muted);font-size:10px;padding:3px 8px;border-radius:12px;font-family:monospace;}
+
+/* TIPS */
+.tip-card{background:#fff;border-left:4px solid var(--gold);border-radius:0 8px 8px 0;padding:1rem 1.1rem;margin-bottom:1rem;border-top:1px solid var(--border);border-right:1px solid var(--border);border-bottom:1px solid var(--border);}
+.tip-title{font-size:clamp(13px,3.5vw,14px);font-weight:600;color:var(--prim);margin-bottom:.35rem;}
+.tip-text{font-size:clamp(12px,3vw,13px);color:var(--muted);line-height:1.65;}
+
+/* BUTTONS */
+.btn-print{display:flex;align-items:center;gap:8px;background:var(--prim);color:#fff;border:none;padding:.8rem 1.25rem;border-radius:8px;font-family:'Source Serif 4',serif;font-size:14px;cursor:pointer;margin-bottom:1rem;min-height:var(--tap);}
+.btn-reset{background:none;border:1px solid var(--border);color:var(--muted);padding:.65rem 1rem;border-radius:8px;font-size:13px;font-family:'Source Serif 4',serif;cursor:pointer;min-height:var(--tap);margin-top:.5rem;display:inline-flex;align-items:center;}
+
+/* COMO USAR */
+.guide-section{padding:1.25rem;}
+.guide-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.25rem;margin-bottom:1rem;}
+.guide-card-title{font-family:'Playfair Display',serif;font-size:clamp(14px,4vw,16px);color:var(--prim);font-weight:700;margin-bottom:.6rem;line-height:1.3;}
+.guide-card p{font-size:clamp(12px,3.5vw,13px);color:var(--muted);line-height:1.75;margin-bottom:.5rem;}
+.guide-card p:last-child{margin-bottom:0;}
+.guide-card strong{color:var(--text);}
+.guide-highlight{background:linear-gradient(135deg,#f0efe8,#f9f5ed);border:1px solid var(--gold);border-radius:10px;padding:1.1rem 1.25rem;margin-bottom:1rem;}
+.guide-highlight-title{font-family:'Playfair Display',serif;font-size:clamp(13px,4vw,15px);color:var(--gold);margin-bottom:.85rem;font-weight:700;}
+.guide-step{display:flex;gap:12px;margin-bottom:.9rem;align-items:flex-start;}
+.guide-step:last-child{margin-bottom:0;}
+.guide-step-num{width:28px;height:28px;background:var(--prim);color:var(--gold-l);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:1px;}
+.guide-step-text{font-size:clamp(12px,3.5vw,13px);color:var(--muted);line-height:1.65;}
+.guide-step-text strong{color:var(--text);}
+.guide-faq{border-top:1px solid var(--border);padding-top:1rem;margin-top:.75rem;}
+.guide-faq-q{font-size:clamp(12px,3.5vw,13px);font-weight:700;color:var(--prim);margin-bottom:.35rem;}
+.guide-faq-a{font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:1rem;}
+.guide-faq-a:last-child{margin-bottom:0;}
+.guide-bible-parts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:.75rem;}
+.guide-part{background:var(--cream);border:1px solid var(--border);border-radius:8px;padding:.75rem .6rem;text-align:center;}
+.guide-part-title{font-family:'Playfair Display',serif;font-size:clamp(12px,3.5vw,13px);color:var(--prim);font-weight:700;margin-bottom:.3rem;}
+.guide-part-sub{font-size:11px;color:var(--muted);line-height:1.5;}
+
+/* TABLET */
+@media(min-width:600px){
+  .tab-btn{min-width:90px;font-size:13px;}
+  .phase-meta{display:inline;}
+  .week-header{padding:.85rem 1.1rem;}
+  .day-row{padding:.8rem 1.1rem;}
+  .stats-grid{gap:12px;}
+  .guide-section,.tab-content{padding:1.5rem;}
+  .guide-card,.guide-highlight{padding:1.25rem 1.5rem;}
+}
+@media(min-width:900px){
+  .tab-btn{flex:1;}
+}
+
+/* PRINT */
+@media print{
+  .tabs,.btn-print,.btn-reset{display:none!important;}
+  .phase-weeks,.week-days{display:block!important;}
+  .tab-content{display:block!important;padding:.5rem 0;}
+  .hero{background:#1a3a2a!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .phase-meta{display:inline!important;}
+}
+</style>
+</head>
+<body>
+
+
+<h2 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">Guía de Lectura de la Biblia en Orden Cronológico — 52 semanas con plan diario</h2>
+
+<div class="hero">
+  <div class="hero-label">Guía Completa</div>
+  <h1>Lee la Biblia en<br><em>Orden Cronológico</em><br>en 1 Año</h1>
+  <p class="hero-sub">52 semanas · 15–20 min por día · Plan diario equilibrado · Checklist interactivo</p>
+  <div class="badges">
+    <span class="badge">52 semanas</span>
+    <span class="badge">Plan diario</span>
+    <span class="badge">15–20 min/día</span>
+    <span class="badge">Checklist</span>
+    <span class="badge">Imprimible</span>
+  </div>
+  <div class="progress-bar-wrap"><div class="progress-bar-fill" id="prog-bar" style="width:0%"></div></div>
+  <div class="progress-label" id="prog-label">0 de 364 días completados</div>
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('comousar',this)">Cómo Usar</button>
+  <button class="tab-btn" onclick="showTab('checklist',this)">Checklist</button>
+  <button class="tab-btn" onclick="showTab('timeline',this)">Línea de Tiempo</button>
+  <button class="tab-btn" onclick="showTab('dicas',this)">Consejos</button>
+  <button class="tab-btn" onclick="showTab('imprimir',this)">Imprimir</button>
+</div>
+
+<!-- COMO USAR -->
+<div class="tab-content active" id="tab-comousar">
+  <div class="guide-section">
+    <div class="guide-highlight">
+      <div class="guide-highlight-title">Empieza aquí — cómo funciona esta guía</div>
+      <div class="guide-step"><div class="guide-step-num">1</div><div class="guide-step-text"><strong>Ve a la pestaña Checklist.</strong> Verás las 52 semanas del año, cada una como una tarjeta con su número y una frase. Desplázate hacia abajo para encontrar la semana en la que estás.</div></div>
+      <div class="guide-step"><div class="guide-step-num">2</div><div class="guide-step-text"><strong>Toca la tarjeta de la semana</strong> para ver los 7 días de lectura. Cada día muestra el nombre del día, los capítulos a leer y un breve resumen de lo que vas a encontrar.</div></div>
+      <div class="guide-step"><div class="guide-step-num">3</div><div class="guide-step-text"><strong>Cada lectura diaria toma entre 15 y 20 minutos.</strong> El plan fue calculado para mantener ese ritmo constante durante las 52 semanas — sin semanas demasiado pesadas.</div></div>
+      <div class="guide-step"><div class="guide-step-num">4</div><div class="guide-step-text"><strong>Al terminar el día, toca el cuadro a la derecha</strong> para marcarlo como leído. Cuando los 7 días de la semana estén marcados, la semana se completa automáticamente.</div></div>
+      <div class="guide-step"><div class="guide-step-num">5</div><div class="guide-step-text"><strong>Tu progreso se guarda automáticamente</strong> en el navegador de tu celular o computadora. Puedes cerrar y abrir cuando quieras — las marcas permanecen.</div></div>
+    </div>
+
+    <div class="guide-card">
+      <div class="guide-card-title">Qué es la Biblia — para quienes nunca la han leído</div>
+      <p>La Biblia es una colección de <strong>66 libros</strong> escritos a lo largo de aproximadamente <strong>1.500 años</strong>, por unos 40 autores diferentes — reyes, pastores, pescadores, profetas y médicos. Está dividida en dos grandes bloques:</p>
+      <div class="guide-bible-parts">
+        <div class="guide-part"><div class="guide-part-title">Antiguo Testamento</div><div class="guide-part-sub">39 libros · Desde la creación hasta el siglo V a.C. · La historia del pueblo de Israel</div></div>
+        <div class="guide-part"><div class="guide-part-title">Nuevo Testamento</div><div class="guide-part-sub">27 libros · Siglo I d.C. · Jesús, los apóstoles y las primeras iglesias</div></div>
+      </div>
+      <p style="margin-top:.75rem;">Esta guía recorre los <strong>1.189 capítulos</strong> de la Biblia en orden cronológico — es decir, en la secuencia en que ocurrieron los eventos en la historia, no en el orden en que aparecen en el libro impreso.</p>
+    </div>
+
+    <div class="guide-card">
+      <div class="guide-card-title">Por qué leer en orden cronológico hace la diferencia</div>
+      <p>La Biblia impresa fue organizada por <em>tipo de texto</em> — primero los libros históricos, luego los poéticos, después los proféticos — y no por fecha. Esto hace que eventos del mismo período histórico queden en libros completamente separados.</p>
+      <p>Por ejemplo: los profetas Amós y Oseas vivieron exactamente durante el período narrado en 2 Reyes — pero en el libro impreso aparecen decenas de páginas después. Leyendo en orden cronológico, los encuentras al mismo tiempo. El contexto histórico cobra vida y todo tiene más sentido.</p>
+    </div>
+
+    <div class="guide-card">
+      <div class="guide-card-title">Cómo leer las referencias de lectura</div>
+      <p>Cada día indica los capítulos completos. El formato es simple: <strong>nombre del libro seguido de los capítulos</strong>. Ejemplos:</p>
+      <p style="background:var(--cream2);padding:.6rem .85rem;border-radius:6px;font-size:13px;margin:.5rem 0;line-height:1.8;">Génesis 1–3 → lee los capítulos 1, 2 y 3 de Génesis<br>Salmos 51 → lee el salmo número 51<br>Mateo 5–7 → lee los capítulos 5, 6 y 7 de Mateo</p>
+      <p>Cuando dos libros aparecen separados por punto y coma — como <em>1 Samuel 16; Salmos 23</em> — léelos los dos en la misma sesión, uno después del otro. Juntos siguen estando dentro de los 15–20 minutos.</p>
+      <p>La versión <strong>NVI (Nueva Versión Internacional)</strong> es la más recomendada para quienes están empezando — lenguaje contemporáneo y fluido. La aplicación <strong>YouVersion</strong> es gratuita y permite ir directo al capítulo indicado.</p>
+    </div>
+
+    <div class="guide-card">
+      <div class="guide-card-title">Preguntas frecuentes</div>
+      <div class="guide-faq">
+        <div class="guide-faq-q">¿Necesito ser religiosa para leer?</div>
+        <div class="guide-faq-a">No. Muchas personas leen la Biblia por razones históricas, culturales o filosóficas. Es uno de los textos más influyentes de la civilización occidental y su lectura enriquece cualquier repertorio. Lee con curiosidad abierta.</div>
+        <div class="guide-faq-q">¿Y si me salto un día o una semana?</div>
+        <div class="guide-faq-a">Continúa donde quedaste. No intentes recuperar todo de una vez — eso lleva al abandono. La meta es llegar al final, no ser perfecta. La guía está hecha para acompañar tu ritmo real.</div>
+        <div class="guide-faq-q">¿Y si no entiendo lo que estoy leyendo?</div>
+        <div class="guide-faq-a">Es completamente normal, especialmente en Levítico y en los libros proféticos. El pequeño resumen de cada día te ayuda a situar lo que vas a encontrar. Sigue leyendo aunque no lo entiendas todo — con el tiempo, los textos se iluminan entre sí. Consulta también la pestaña Línea de Tiempo para el contexto histórico de cada período.</div>
+        <div class="guide-faq-q">¿Puedo escuchar en vez de leer?</div>
+        <div class="guide-faq-a">Sí. La Biblia en audio completa está disponible gratis en YouTube en varios idiomas, incluido el español. Los días sin energía para leer, escuchar cuenta — y cabe en cualquier traslado, caminata o tarea doméstica. Marca el día normalmente en el checklist.</div>
+        <div class="guide-faq-q">¿El progreso se guarda si cierro el celular?</div>
+        <div class="guide-faq-a">Sí. Las marcas se guardan automáticamente en el almacenamiento local de tu navegador. Permanecen aunque cierres y vuelvas a abrir. Atención: si limpias los datos del navegador o lo abres en otro dispositivo, el progreso no se transferirá. Para asegurarlo, usa la pestaña Imprimir y guarda una versión física.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHECKLIST -->
+<div class="tab-content" id="tab-checklist">
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-num" id="s-days">0</div><div class="stat-label">Días hechos</div></div>
+    <div class="stat-card"><div class="stat-num" id="s-pct">0%</div><div class="stat-label">Completado</div></div>
+    <div class="stat-card"><div class="stat-num" id="s-left">364</div><div class="stat-label">Días restantes</div></div>
+  </div>
+  <div id="phases-container"></div>
+</div>
+
+<!-- LINEA DE TIEMPO -->
+<div class="tab-content" id="tab-timeline">
+  <div class="section-title">Línea de Tiempo Bíblica</div>
+  <div class="section-sub">Los grandes períodos de la historia bíblica y lo que ocurrió en cada uno</div>
+  <div class="timeline" id="timeline-content"></div>
+</div>
+
+<!-- CONSEJOS -->
+<div class="tab-content" id="tab-dicas">
+  <div class="section-title">Cómo mantener el ritmo</div>
+  <div class="section-sub">Estrategias prácticas para completar los 365 días</div>
+  <div id="tips-content"></div>
+</div>
+
+<!-- IMPRIMIR -->
+<div class="tab-content" id="tab-imprimir">
+  <div class="section-title">Versión para imprimir</div>
+  <div class="section-sub">Haz clic en el botón de abajo para abrir la ventana de impresión del navegador</div>
+  <button class="btn-print" onclick="window.print()">Imprimir guía completa</button>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:1.5rem;">Consejo: en la configuración de impresión, activa "Gráficos de fondo" para conservar los colores.</p>
+  <div class="section-title" style="font-size:16px;margin-bottom:.5rem;">Restablecer progreso</div>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:.75rem;">Atención: esto borrará todas las marcas.</p>
+  <button class="btn-reset" onclick="resetAll()">Restablecer todas las marcas</button>
+</div>
+
+<script>
+// ─────────────────────────────────────────────────────────
+// PLAN COMPLETO — 52 semanas × 7 días
+// ~3 capítulos por día = ~15-20 min de lectura
+// Orden cronológico riguroso
+// ─────────────────────────────────────────────────────────
+const PHASES = [
+{name:"Creación y Patriarcas",num:"I",meta:"Semanas 1–7",weeks:[
+  {n:1,title:"La Creación y el Jardín del Edén",ctx:"~4000 a.C. • Dios crea el universo; Adán y Eva; la Caída; Caín y Abel.",days:[
+    {d:"Día 1",r:"Génesis 1–2",note:"La creación del mundo y del ser humano."},
+    {d:"Día 2",r:"Génesis 3–4",note:"La caída en el Edén; Caín mata a Abel."},
+    {d:"Día 3",r:"Génesis 5–6",note:"Genealogía de Adán; la corrupción humana; Noé recibe la misión."},
+    {d:"Día 4",r:"Génesis 7–8",note:"El diluvio y los cuarenta días de lluvia; el arca se posa."},
+    {d:"Día 5",r:"Génesis 9–10",note:"Pacto con Noé; el arcoíris; dispersión de los pueblos."},
+    {d:"Día 6",r:"Génesis 11",note:"La Torre de Babel; confusión de las lenguas; genealogía hasta Abram."},
+    {d:"Día 7",r:"Génesis 12–13",note:"Dios llama a Abram; parte hacia Canaán; separación de Lot."},
+  ]},
+  {n:2,title:"Abraham — la fe que fundó una nación",ctx:"~2000–1900 a.C. • El pacto de Dios con Abraham; promesa de tierra y descendientes.",days:[
+    {d:"Día 1",r:"Génesis 14–15",note:"Abraham rescata a Lot; pacto con Dios; promesa de herederos."},
+    {d:"Día 2",r:"Génesis 16–17",note:"Agar e Ismael; la circuncisión como señal del pacto."},
+    {d:"Día 3",r:"Génesis 18–19",note:"Los tres visitantes; destrucción de Sodoma y Gomorra."},
+    {d:"Día 4",r:"Génesis 20–21",note:"Abraham en Gerar; nacimiento de Isaac; Agar expulsada."},
+    {d:"Día 5",r:"Génesis 22–23",note:"La prueba del sacrificio de Isaac; muerte de Sara."},
+    {d:"Día 6",r:"Génesis 24",note:"La búsqueda de esposa para Isaac — Rebeca."},
+    {d:"Día 7",r:"Génesis 25",note:"Muerte de Abraham; nacimiento de Esaú y Jacob; venta de la primogenitura."},
+  ]},
+  {n:3,title:"Isaac y Jacob — engaño y transformación",ctx:"~1850 a.C. • Jacob roba la bendición de Esaú; huida y encuentro con Dios.",days:[
+    {d:"Día 1",r:"Génesis 26–27",note:"Isaac en Gerar; Jacob engaña al padre y roba la bendición de Esaú."},
+    {d:"Día 2",r:"Génesis 28–29",note:"Jacob huye; la escalera al cielo; Jacob llega a Harán y se enamora de Raquel."},
+    {d:"Día 3",r:"Génesis 30–31",note:"Hijos de Jacob; huida de Harán con la familia."},
+    {d:"Día 4",r:"Génesis 32–33",note:"Jacob lucha con Dios; recibe el nombre Israel; se reencuentra con Esaú."},
+    {d:"Día 5",r:"Génesis 34–35",note:"Episodio de Dina; muerte de Raquel; muerte de Isaac."},
+    {d:"Día 6",r:"Génesis 36–37",note:"Descendientes de Esaú; José tiene sueños; es vendido por sus hermanos."},
+    {d:"Día 7",r:"Génesis 38–39",note:"Judá y Tamar; José en Egipto — rechaza a la esposa de Potifar; encarcelado."},
+  ]},
+  {n:4,title:"José en Egipto — sufrimiento y providencia",ctx:"~1800–1700 a.C. • José esclavizado asciende al poder en Egipto.",days:[
+    {d:"Día 1",r:"Génesis 40–41",note:"José interpreta sueños en la prisión; es llamado por el faraón; se convierte en gobernador."},
+    {d:"Día 2",r:"Génesis 42–43",note:"Los hermanos de José vienen a Egipto a buscar trigo; no lo reconocen."},
+    {d:"Día 3",r:"Génesis 44–45",note:"La trampa de José; se revela a sus hermanos; reconciliación."},
+    {d:"Día 4",r:"Génesis 46–47",note:"Jacob va a Egipto; José sostiene a la familia durante el hambre."},
+    {d:"Día 5",r:"Génesis 48–50",note:"Jacob bendice a sus hijos; muerte de Jacob y de José."},
+    {d:"Día 6",r:"Job 1–3",note:"Job — un hombre justo es probado; lo pierde todo; maldice el día en que nació."},
+    {d:"Día 7",r:"Job 4–7",note:"Elifaz habla; Job responde: mi queja es justa."},
+  ]},
+  {n:5,title:"Job — el enigma del sufrimiento",ctx:"~1700 a.C. • El libro más antiguo de la Biblia trata sobre el dolor sin respuesta fácil.",days:[
+    {d:"Día 1",r:"Job 8–10",note:"Bildad habla; Job responde a Dios: ¿por qué me persigues?"},
+    {d:"Día 2",r:"Job 11–14",note:"Zofar habla; Job: el ser humano es frágil como una flor."},
+    {d:"Día 3",r:"Job 15–18",note:"Segundo ciclo de debates: los amigos insisten en que Job pecó."},
+    {d:"Día 4",r:"Job 19–21",note:"Job: yo sé que mi Redentor vive; Zofar sobre el destino del malvado."},
+    {d:"Día 5",r:"Job 22–26",note:"Tercer ciclo; Job mantiene su inocencia."},
+    {d:"Día 6",r:"Job 27–31",note:"Job exalta la sabiduría; hace su juramento final de inocencia."},
+    {d:"Día 7",r:"Job 32–34",note:"Eliú, el joven, interviene con una nueva perspectiva."},
+  ]},
+  {n:6,title:"Job — la respuesta de Dios",ctx:"~1700 a.C. • Dios habla desde la tormenta; Job es restaurado.",days:[
+    {d:"Día 1",r:"Job 35–37",note:"Eliú continúa: la grandeza de Dios supera cualquier acusación."},
+    {d:"Día 2",r:"Job 38–39",note:"Dios habla desde la tormenta: ¿dónde estabas cuando creé el universo?"},
+    {d:"Día 3",r:"Job 40–42",note:"Job se humilla; Dios restaura todo el doble; fin del libro."},
+    {d:"Día 4",r:"Génesis — repaso",note:"Día de repaso: vuelve a leer un pasaje favorito de Génesis o reflexiona sobre lo leído."},
+    {d:"Día 5",r:"Éxodo 1–2",note:"Los israelitas esclavizados en Egipto; nacimiento y huida de Moisés."},
+    {d:"Día 6",r:"Éxodo 3–4",note:"La zarza ardiente; Dios llama a Moisés; las señales dadas a Moisés."},
+    {d:"Día 7",r:"Éxodo 5–6",note:"Moisés ante el faraón; el pueblo sufre más; Dios renueva la promesa."},
+  ]},
+  {n:7,title:"El Éxodo — la liberación de Egipto",ctx:"~1446 a.C. • Las diez plagas; la Pascua; el cruce del Mar Rojo.",days:[
+    {d:"Día 1",r:"Éxodo 7–8",note:"Primeras plagas: agua en sangre, ranas, piojos, moscas."},
+    {d:"Día 2",r:"Éxodo 9–10",note:"Plagas: ganado, úlceras, granizo, langostas."},
+    {d:"Día 3",r:"Éxodo 11–12",note:"La décima plaga; se instituye la Pascua; salida de Egipto."},
+    {d:"Día 4",r:"Éxodo 13–14",note:"La columna de nube y fuego; cruce del Mar Rojo."},
+    {d:"Día 5",r:"Éxodo 15–16",note:"Cántico de Moisés; maná y codornices en el desierto."},
+    {d:"Día 6",r:"Éxodo 17–18",note:"Agua de la roca en Refidim; Jetro aconseja a Moisés."},
+    {d:"Día 7",r:"Éxodo 19–20",note:"El pueblo llega al Sinaí; los Diez Mandamientos."},
+  ]},
+]},
+
+{name:"La Ley y el Desierto",num:"II",meta:"Semanas 8–14",weeks:[
+  {n:8,title:"El pacto en el Sinaí",ctx:"~1446 a.C. • Leyes, el Tabernáculo y el becerro de oro.",days:[
+    {d:"Día 1",r:"Éxodo 21–22",note:"Leyes sobre esclavitud, violencia, propiedad."},
+    {d:"Día 2",r:"Éxodo 23–24",note:"Leyes de las fiestas; ratificación del pacto en el Sinaí."},
+    {d:"Día 3",r:"Éxodo 25–27",note:"Instrucciones para el Tabernáculo: el Arca, la mesa, el candelabro."},
+    {d:"Día 4",r:"Éxodo 28–29",note:"Las vestiduras sacerdotales; consagración de los sacerdotes."},
+    {d:"Día 5",r:"Éxodo 30–31",note:"El altar del incienso; el día de reposo; Bezalel, el artesano."},
+    {d:"Día 6",r:"Éxodo 32–33",note:"El becerro de oro; la ira de Dios; Moisés intercede."},
+    {d:"Día 7",r:"Éxodo 34–35",note:"Renovación del pacto; nuevas tablas; el brillo del rostro de Moisés."},
+  ]},
+  {n:9,title:"La construcción del Tabernáculo",ctx:"~1446 a.C. • El lugar de encuentro entre Dios y el pueblo.",days:[
+    {d:"Día 1",r:"Éxodo 36–37",note:"Construcción del Tabernáculo y del Arca del Pacto."},
+    {d:"Día 2",r:"Éxodo 38–40",note:"Conclusión del Tabernáculo; la gloria de Dios lo llena."},
+    {d:"Día 3",r:"Levítico 1–3",note:"Leyes de los holocaustos, ofrendas de cereales y ofrendas de paz."},
+    {d:"Día 4",r:"Levítico 4–5",note:"Ofrenda por el pecado y por la culpa."},
+    {d:"Día 5",r:"Levítico 6–7",note:"Instrucciones adicionales para los sacerdotes sobre las ofrendas."},
+    {d:"Día 6",r:"Levítico 8–9",note:"Consagración de Aarón y sus hijos; primer sacrificio."},
+    {d:"Día 7",r:"Levítico 10–11",note:"Muerte de Nadab y Abiú; leyes sobre animales puros e impuros."},
+  ]},
+  {n:10,title:"Levítico — pureza y santidad",ctx:"~1446 a.C. • Leyes que moldearon la identidad del pueblo de Israel.",days:[
+    {d:"Día 1",r:"Levítico 12–13",note:"Purificación después del parto; leyes sobre la lepra."},
+    {d:"Día 2",r:"Levítico 14–15",note:"Purificación de la lepra; impurezas corporales."},
+    {d:"Día 3",r:"Levítico 16",note:"El Día de la Expiación — Yom Kippur; el macho cabrío expiatorio."},
+    {d:"Día 4",r:"Levítico 17–18",note:"Santidad de la sangre; leyes sobre la sexualidad."},
+    {d:"Día 5",r:"Levítico 19–20",note:"El código de santidad: ama a tu prójimo como a ti mismo."},
+    {d:"Día 6",r:"Levítico 21–22",note:"Requisitos para los sacerdotes; pureza de las ofrendas."},
+    {d:"Día 7",r:"Levítico 23–24",note:"Las fiestas sagradas: Pascua, Pentecostés, Tabernáculos."},
+  ]},
+  {n:11,title:"El Jubileo y el censo",ctx:"~1446–1445 a.C. • Leyes sociales y la organización del pueblo.",days:[
+    {d:"Día 1",r:"Levítico 25",note:"El año sabático y el Jubileo — liberación de deudas y de la tierra."},
+    {d:"Día 2",r:"Levítico 26–27",note:"Bendiciones por la obediencia; maldiciones por la desobediencia."},
+    {d:"Día 3",r:"Números 1–2",note:"El censo de las tribus de Israel; organización del campamento."},
+    {d:"Día 4",r:"Números 3–4",note:"Los levitas y sus deberes en el Tabernáculo."},
+    {d:"Día 5",r:"Números 5–6",note:"Leyes de pureza; el voto del nazareo; la bendición sacerdotal."},
+    {d:"Día 6",r:"Números 7",note:"Ofrendas de los líderes de las tribus en la dedicación del Tabernáculo."},
+    {d:"Día 7",r:"Números 8–9",note:"Consagración de los levitas; segunda Pascua; la nube guía al pueblo."},
+  ]},
+  {n:12,title:"Rebeldía en el desierto",ctx:"~1445–1406 a.C. • El pueblo se queja; cuarenta años de peregrinación.",days:[
+    {d:"Día 1",r:"Números 10–11",note:"El pueblo parte del Sinaí; quejas; las codornices."},
+    {d:"Día 2",r:"Números 12–13",note:"Miriam y Aarón critican a Moisés; los doce espías en Canaán."},
+    {d:"Día 3",r:"Números 14–15",note:"El pueblo se niega a entrar en Canaán; castigo: 40 años en el desierto."},
+    {d:"Día 4",r:"Números 16–17",note:"Rebelión de Coré; la vara de Aarón que floreció."},
+    {d:"Día 5",r:"Números 18–19",note:"Deberes de los sacerdotes; agua de purificación."},
+    {d:"Día 6",r:"Números 20–21",note:"Muerte de Miriam; Moisés golpea la roca; la serpiente de bronce."},
+    {d:"Día 7",r:"Números 22–24",note:"Balaam y el asno que habla; las bendiciones involuntarias sobre Israel."},
+  ]},
+  {n:13,title:"Fin de la peregrinación",ctx:"~1406 a.C. • Nuevo censo; Josué elegido; llegada a las llanuras de Moab.",days:[
+    {d:"Día 1",r:"Números 25–26",note:"Apostasía en Baal-Peor; segundo censo del pueblo."},
+    {d:"Día 2",r:"Números 27–28",note:"Las hijas de Zelofehad; Josué es designado sucesor; calendario de ofrendas."},
+    {d:"Día 3",r:"Números 29–30",note:"Fiestas y sus sacrificios; leyes sobre votos."},
+    {d:"Día 4",r:"Números 31–32",note:"Guerra contra Madián; tribus que se quedan al otro lado del Jordán."},
+    {d:"Día 5",r:"Números 33–34",note:"Jornadas por el desierto enumeradas; fronteras de la tierra prometida."},
+    {d:"Día 6",r:"Números 35–36",note:"Ciudades de los levitas; ciudades de refugio; herencia de las hijas."},
+    {d:"Día 7",r:"Deuteronomio 1–2",note:"Moisés repasa el viaje desde el Sinaí hasta Moab."},
+  ]},
+  {n:14,title:"Deuteronomio — los discursos de Moisés",ctx:"~1406 a.C. • Moisés revisa la Ley antes de morir; Josué es nombrado.",days:[
+    {d:"Día 1",r:"Deuteronomio 3–4",note:"Conquistas al otro lado del Jordán; exhortación a la obediencia."},
+    {d:"Día 2",r:"Deuteronomio 5–6",note:"Los Diez Mandamientos repetidos; el Shemá: 'Escucha, Israel'."},
+    {d:"Día 3",r:"Deuteronomio 7–9",note:"Advertencias contra la idolatría; recuerda el desierto."},
+    {d:"Día 4",r:"Deuteronomio 10–12",note:"Lo que Dios exige; leyes del lugar de adoración."},
+    {d:"Día 5",r:"Deuteronomio 13–16",note:"Falsos profetas; alimentos puros; fiestas anuales."},
+    {d:"Día 6",r:"Deuteronomio 17–20",note:"Reyes, sacerdotes, profetas y leyes de guerra."},
+    {d:"Día 7",r:"Deuteronomio 21–23",note:"Diversas leyes sociales; matrimonio; comunidad."},
+  ]},
+]},
+
+{name:"Conquista y Jueces",num:"III",meta:"Semanas 15–21",weeks:[
+  {n:15,title:"Deuteronomio — bendiciones y maldiciones",ctx:"~1406 a.C. • El pacto renovado; muerte de Moisés.",days:[
+    {d:"Día 1",r:"Deuteronomio 24–26",note:"Leyes sociales; diezmos; primicias de la tierra."},
+    {d:"Día 2",r:"Deuteronomio 27–28",note:"Las bendiciones y maldiciones del Monte Ebal — la gran decisión."},
+    {d:"Día 3",r:"Deuteronomio 29–30",note:"Renovación del pacto; elegir entre vida y muerte."},
+    {d:"Día 4",r:"Deuteronomio 31–32",note:"Josué toma el relevo; el cántico de Moisés."},
+    {d:"Día 5",r:"Deuteronomio 33–34",note:"Bendición final de Moisés; su muerte en el Monte Nebo."},
+    {d:"Día 6",r:"Josué 1–2",note:"Josué recibe la misión; los espías en Jericó y Rahab."},
+    {d:"Día 7",r:"Josué 3–4",note:"Cruce del Río Jordán; las doce piedras conmemorativas."},
+  ]},
+  {n:16,title:"La conquista de Canaán",ctx:"~1406–1400 a.C. • La caída de Jericó; la campaña militar de Josué.",days:[
+    {d:"Día 1",r:"Josué 5–6",note:"Circuncisión renovada; caída de las murallas de Jericó."},
+    {d:"Día 2",r:"Josué 7–8",note:"Pecado de Acán; derrota en Hai; la segunda batalla ganada."},
+    {d:"Día 3",r:"Josué 9–10",note:"El engaño de los gabaonitas; el sol detenido en Gabaón."},
+    {d:"Día 4",r:"Josué 11–12",note:"Conquista del norte; lista de los reyes derrotados."},
+    {d:"Día 5",r:"Josué 13–14",note:"División de la tierra; Caleb recibe su herencia."},
+    {d:"Día 6",r:"Josué 15–16",note:"Herencia de Judá y de los hijos de José."},
+    {d:"Día 7",r:"Josué 17–18",note:"Herencia de Manasés; división de las tierras restantes."},
+  ]},
+  {n:17,title:"Israel en la tierra prometida",ctx:"~1400 a.C. • La tierra dividida; la despedida de Josué.",days:[
+    {d:"Día 1",r:"Josué 19–20",note:"Herencia de las seis tribus restantes; ciudades de refugio."},
+    {d:"Día 2",r:"Josué 21–22",note:"Ciudades de los levitas; el altar de testimonio al otro lado del Jordán."},
+    {d:"Día 3",r:"Josué 23–24",note:"Último discurso de Josué; renovación del pacto en Siquem."},
+    {d:"Día 4",r:"Jueces 1–2",note:"Conquistas incompletas; el ángel reprende al pueblo; el ciclo de los jueces."},
+    {d:"Día 5",r:"Jueces 3–4",note:"Otoniel, Ehud; Débora y Barac vencen a Sísara."},
+    {d:"Día 6",r:"Jueces 5–6",note:"El cántico de Débora; llamado de Gedeón."},
+    {d:"Día 7",r:"Jueces 7–8",note:"Gedeón derrota a los madianitas con 300 hombres."},
+  ]},
+  {n:18,title:"Los Jueces — caos y liberación",ctx:"~1100 a.C. • Abimelec, Jefté y Sansón.",days:[
+    {d:"Día 1",r:"Jueces 9–10",note:"Abimelec, el rey usurpador; jueces menores."},
+    {d:"Día 2",r:"Jueces 11–12",note:"Jefté y su voto trágico; guerras tribales."},
+    {d:"Día 3",r:"Jueces 13–14",note:"Nacimiento de Sansón; matrimonio y el enigma."},
+    {d:"Día 4",r:"Jueces 15–16",note:"Sansón y los filisteos; Dalila y la traición; su muerte."},
+    {d:"Día 5",r:"Jueces 17–18",note:"La idolatría de Micaía; la migración de la tribu de Dan."},
+    {d:"Día 6",r:"Jueces 19–20",note:"El crimen de Guibeá; guerra civil contra Benjamín."},
+    {d:"Día 7",r:"Jueces 21",note:"Benjamín casi extinguido; fin del período de los jueces."},
+  ]},
+  {n:19,title:"Rut — fidelidad y redención",ctx:"~1100 a.C. • Una historia de amor y lealtad en el tiempo de los jueces.",days:[
+    {d:"Día 1",r:"Rut 1",note:"Rut se niega a abandonar a Noemí: 'a donde tú vayas, iré yo'."},
+    {d:"Día 2",r:"Rut 2",note:"Rut espiga en el campo de Booz; él la nota y la protege."},
+    {d:"Día 3",r:"Rut 3",note:"Noemí aconseja a Rut; la escena en la era."},
+    {d:"Día 4",r:"Rut 4",note:"Booz redime a Rut; matrimonio; nace Obed — abuelo de David."},
+    {d:"Día 5",r:"1 Samuel 1–2",note:"Ana ora por un hijo; nace Samuel; el cántico de Ana."},
+    {d:"Día 6",r:"1 Samuel 3–4",note:"Dios llama a Samuel de noche; el Arca capturada por los filisteos."},
+    {d:"Día 7",r:"1 Samuel 5–7",note:"El Arca entre los filisteos; Samuel guía el regreso a Dios."},
+  ]},
+  {n:20,title:"Samuel y el primer rey",ctx:"~1050 a.C. • El pueblo pide un rey; Saúl es ungido.",days:[
+    {d:"Día 1",r:"1 Samuel 8–9",note:"El pueblo exige un rey; Saúl encuentra a Samuel."},
+    {d:"Día 2",r:"1 Samuel 10–11",note:"Saúl ungido en secreto; victoria sobre Amón; aclamado rey."},
+    {d:"Día 3",r:"1 Samuel 12–13",note:"Discurso de despedida de Samuel; Saúl desobedece antes de la batalla."},
+    {d:"Día 4",r:"1 Samuel 14",note:"Jonatán ataca solo; la hazaña imprudente de Saúl."},
+    {d:"Día 5",r:"1 Samuel 15",note:"Saúl perdona al rey Agag; Samuel: obedecer es mejor que sacrificar."},
+    {d:"Día 6",r:"1 Samuel 16",note:"David ungido por Samuel; David toca el arpa para Saúl."},
+    {d:"Día 7",r:"1 Samuel 17",note:"David y Goliat — el joven pastor derriba al gigante."},
+  ]},
+  {n:21,title:"David huye de Saúl",ctx:"~1025–1010 a.C. • Amistad con Jonatán; años de persecución.",days:[
+    {d:"Día 1",r:"1 Samuel 18–19",note:"La amistad de David y Jonatán; Saúl intenta matar a David."},
+    {d:"Día 2",r:"1 Samuel 20–21",note:"Jonatán avisa a David; David huye; el pan sagrado en Nob."},
+    {d:"Día 3",r:"1 Samuel 22–23",note:"David en la cueva de Adulam; salva la ciudad de Keilá."},
+    {d:"Día 4",r:"1 Samuel 24–25",note:"David perdona la vida de Saúl; muerte de Samuel; Abigail."},
+    {d:"Día 5",r:"1 Samuel 26–27",note:"David perdona a Saúl por segunda vez; se refugia entre los filisteos."},
+    {d:"Día 6",r:"Salmos 59; Salmos 34; Salmos 56",note:"Salmos compuestos por David durante la huida."},
+    {d:"Día 7",r:"1 Samuel 28–29",note:"Saúl consulta a la médium de Endor; los filisteos sospechan de David."},
+  ]},
+]},
+
+{name:"La Monarquía Unida",num:"IV",meta:"Semanas 22–29",weeks:[
+  {n:22,title:"David se convierte en rey",ctx:"~1010 a.C. • Muerte de Saúl; David rey de Judá, luego de todo Israel.",days:[
+    {d:"Día 1",r:"1 Samuel 30–31",note:"David rescata a los cautivos de Siclag; muerte de Saúl y Jonatán."},
+    {d:"Día 2",r:"2 Samuel 1–2",note:"Lamento de David por Saúl y Jonatán; ungido rey de Judá."},
+    {d:"Día 3",r:"2 Samuel 3–4",note:"Guerra entre las casas de David y Saúl; muerte de Abner; muerte de Is-boset."},
+    {d:"Día 4",r:"2 Samuel 5–6",note:"David ungido rey de todo Israel; conquista Jerusalén; el Arca es traída."},
+    {d:"Día 5",r:"1 Crónicas 11–12",note:"Crónicas describe a los guerreros de David."},
+    {d:"Día 6",r:"Salmos 18; Salmos 96; Salmos 105",note:"Salmos de alabanza en el establecimiento del reino."},
+    {d:"Día 7",r:"2 Samuel 7; 1 Crónicas 17",note:"El pacto davídico — Dios promete un trono eterno al linaje de David."},
+  ]},
+  {n:23,title:"El reino de David — gloria y caída",ctx:"~1000 a.C. • Betsabé, Urías y las consecuencias del pecado.",days:[
+    {d:"Día 1",r:"2 Samuel 8–9",note:"Victorias de David; bondad hacia Mefiboset, hijo de Jonatán."},
+    {d:"Día 2",r:"2 Samuel 10–11",note:"Guerra contra Amón; David y Betsabé; muerte de Urías."},
+    {d:"Día 3",r:"Salmos 51; Salmos 32",note:"Salmos de arrepentimiento de David tras el pecado."},
+    {d:"Día 4",r:"2 Samuel 12–13",note:"Natán reprende a David; muere el hijo; el crimen de Amnón."},
+    {d:"Día 5",r:"2 Samuel 14–15",note:"Absalón regresa; conspira contra su padre; David huye de Jerusalén."},
+    {d:"Día 6",r:"Salmos 3; Salmos 63",note:"Salmos de David durante la huida de Absalón."},
+    {d:"Día 7",r:"2 Samuel 16–17",note:"Simei maldice a David; el consejo de Husai engaña a Absalón."},
+  ]},
+  {n:24,title:"Los últimos años de David",ctx:"~990–970 a.C. • Absalón muere; David envejece; prepara el Templo.",days:[
+    {d:"Día 1",r:"2 Samuel 18–19",note:"Muerte de Absalón; el lamento de David; regresa a Jerusalén."},
+    {d:"Día 2",r:"2 Samuel 20–21",note:"Revuelta de Seba; los gabaonitas; guerreros filisteos."},
+    {d:"Día 3",r:"2 Samuel 22–23",note:"Cántico de David; sus últimos salmos; sus guerreros valientes."},
+    {d:"Día 4",r:"2 Samuel 24; 1 Crónicas 21",note:"El censo que trae plaga; David compra el lugar del futuro Templo."},
+    {d:"Día 5",r:"1 Crónicas 22–23",note:"David prepara materiales y personas para la construcción del Templo."},
+    {d:"Día 6",r:"1 Crónicas 24–25",note:"Organización de los sacerdotes y músicos del Templo."},
+    {d:"Día 7",r:"1 Crónicas 26–27",note:"Porteros, tesoreros y líderes militares organizados por David."},
+  ]},
+  {n:25,title:"Salomón — sabiduría y el Templo",ctx:"~970–959 a.C. • Salomón es ungido; el sueño en Gabaón; el Templo construido.",days:[
+    {d:"Día 1",r:"1 Reyes 1–2",note:"Adonías intenta el trono; Salomón es ungido; David muere."},
+    {d:"Día 2",r:"1 Reyes 3–4; 2 Crónicas 1",note:"El sueño en Gabaón; Salomón pide sabiduría; su gobierno."},
+    {d:"Día 3",r:"1 Reyes 5–6; 2 Crónicas 2–3",note:"Preparativos y construcción del Templo."},
+    {d:"Día 4",r:"1 Reyes 7; 2 Crónicas 4",note:"El palacio de Salomón; los utensilios del Templo."},
+    {d:"Día 5",r:"1 Reyes 8; 2 Crónicas 5–6",note:"El Arca es llevada al Templo; la gloria de Dios; la oración de dedicación."},
+    {d:"Día 6",r:"1 Reyes 9; 2 Crónicas 7–8",note:"Dios se aparece de nuevo a Salomón; los proyectos del rey."},
+    {d:"Día 7",r:"1 Reyes 10–11; 2 Crónicas 9",note:"La reina de Sabá visita; riqueza de Salomón; sus esposas lo desvían."},
+  ]},
+  {n:26,title:"Proverbios — la sabiduría de Salomón",ctx:"~960–935 a.C. • Colección de sabiduría práctica para la vida.",days:[
+    {d:"Día 1",r:"Proverbios 1–3",note:"Elogio a la sabiduría: el temor del Señor es el principio del conocimiento."},
+    {d:"Día 2",r:"Proverbios 4–7",note:"Instrucción de padre a hijo; advertencias contra la seducción."},
+    {d:"Día 3",r:"Proverbios 8–9",note:"La sabiduría personificada habla; el banquete de la sabiduría."},
+    {d:"Día 4",r:"Proverbios 10–12",note:"Proverbios de Salomón: comparaciones entre el justo y el malvado."},
+    {d:"Día 5",r:"Proverbios 13–16",note:"Sabiduría en el trabajo, en la lengua, en las relaciones."},
+    {d:"Día 6",r:"Proverbios 17–20",note:"Amistad, integridad, palabras y control de la lengua."},
+    {d:"Día 7",r:"Proverbios 21–24",note:"El corazón del rey; generosidad; prudencia en la guerra."},
+  ]},
+  {n:27,title:"Proverbios, Eclesiastés y Cantares",ctx:"~935 a.C. • La sabiduría reflexiona sobre el sentido de la vida y el amor.",days:[
+    {d:"Día 1",r:"Proverbios 25–27",note:"Proverbios de Salomón copiados por Ezequías; amistad."},
+    {d:"Día 2",r:"Proverbios 28–31",note:"Liderazgo e integridad; la mujer virtuosa del capítulo 31."},
+    {d:"Día 3",r:"Eclesiastés 1–3",note:"Vanidad de vanidades; hay un tiempo para todo."},
+    {d:"Día 4",r:"Eclesiastés 4–7",note:"La opresión; el mejor resultado de la sabiduría; la moderación."},
+    {d:"Día 5",r:"Eclesiastés 8–12",note:"El misterio del tiempo; teme a Dios y guarda sus mandamientos."},
+    {d:"Día 6",r:"Cantares 1–4",note:"Cantar de los Cantares: el amor entre el amado y la amada."},
+    {d:"Día 7",r:"Cantares 5–8",note:"La búsqueda del amado; el amor fuerte como la muerte."},
+  ]},
+  {n:28,title:"El reino dividido",ctx:"~930–880 a.C. • Israel y Judá se separan; comienza la apostasía.",days:[
+    {d:"Día 1",r:"1 Reyes 12–13; 2 Crónicas 10–11",note:"Roboam rechaza a los ancianos; el reino se divide en dos."},
+    {d:"Día 2",r:"1 Reyes 14–15; 2 Crónicas 12–13",note:"Jeroboam y Roboam; reyes de Judá e Israel."},
+    {d:"Día 3",r:"1 Reyes 16; 2 Crónicas 14–16",note:"Reyes de Israel; Asá, rey fiel de Judá."},
+    {d:"Día 4",r:"1 Reyes 17–18",note:"Elías profetiza sequía; la batalla en el Monte Carmelo."},
+    {d:"Día 5",r:"1 Reyes 19",note:"Elías huye de Jezabel; Dios habla en el silencio suave."},
+    {d:"Día 6",r:"1 Reyes 20–21",note:"Acab y Ben-adad; Acab toma la viña de Nabot."},
+    {d:"Día 7",r:"1 Reyes 22; 2 Crónicas 17–18",note:"Muerte de Acab; Josafat, rey fiel de Judá."},
+  ]},
+  {n:29,title:"Eliseo y los reyes del norte",ctx:"~852–841 a.C. • Milagros de Eliseo; Jehú elimina la casa de Acab.",days:[
+    {d:"Día 1",r:"2 Reyes 1–3",note:"Elías sube al cielo; Eliseo recibe el manto; primeros milagros."},
+    {d:"Día 2",r:"2 Reyes 4–5",note:"La viuda y el aceite; la sunamita; Naamán curado de lepra."},
+    {d:"Día 3",r:"2 Reyes 6–7",note:"El hacha que flota; el ejército sirio enceguecido; sitio de Samaria."},
+    {d:"Día 4",r:"2 Reyes 8–9",note:"La sunamita recupera su tierra; Jehú ungido y mata a Joram y Jezabel."},
+    {d:"Día 5",r:"2 Reyes 10–11; 2 Crónicas 22–23",note:"Jehú elimina la casa de Acab; Joás salvado y ungido rey."},
+    {d:"Día 6",r:"Abdías 1; Joel 1–2",note:"Abdías sobre Edom; Joel y la plaga de langostas."},
+    {d:"Día 7",r:"Joel 3; 2 Reyes 12; 2 Crónicas 24",note:"Joel sobre el Espíritu derramado; Joás restaura el Templo."},
+  ]},
+]},
+
+{name:"Reinos Divididos y Profetas",num:"V",meta:"Semanas 30–39",weeks:[
+  {n:30,title:"Amós y Oseas — profecía del norte",ctx:"~760–722 a.C. • Clamor por justicia; Israel se aleja de Dios.",days:[
+    {d:"Día 1",r:"2 Reyes 13–14; 2 Crónicas 25",note:"Reyes de Israel y Judá; Jeroboam II trae prosperidad temporal."},
+    {d:"Día 2",r:"Amós 1–3",note:"Amós: juicio sobre las naciones vecinas y sobre Israel."},
+    {d:"Día 3",r:"Amós 4–6",note:"Amós: 'que la justicia corra como las aguas'; lujo e indiferencia hacia los pobres."},
+    {d:"Día 4",r:"Amós 7–9",note:"Visiones de Amós; expulsión; promesa de restauración."},
+    {d:"Día 5",r:"Oseas 1–3",note:"Oseas se casa con Gomer; metáfora de la infidelidad de Israel."},
+    {d:"Día 6",r:"Oseas 4–7",note:"Israel abandona a Dios; sacerdotes corruptos; política inestable."},
+    {d:"Día 7",r:"Oseas 8–14",note:"Cosecharán viento; pero Dios sigue amando: '¿Cómo podría abandonarte?'"},
+  ]},
+  {n:31,title:"Isaías — visión y juicio",ctx:"~740–700 a.C. • Isaías ve el trono; anuncia al Mesías.",days:[
+    {d:"Día 1",r:"Isaías 1–3",note:"Judá rebelde; 'vengan, razonemos'; juicio sobre Jerusalén."},
+    {d:"Día 2",r:"Isaías 4–6",note:"El renuevo del Señor; la viña; la visión del trono: 'Santo, Santo, Santo'."},
+    {d:"Día 3",r:"Isaías 7–9",note:"'La virgen concebirá'; 'un hijo nos ha nacido' — el Mesías prometido."},
+    {d:"Día 4",r:"Isaías 10–12",note:"Juicio sobre Asiria; el vástago de Jesé; canto de liberación."},
+    {d:"Día 5",r:"Isaías 13–16",note:"Oráculos contra Babilonia, Asiria, Filistea, Moab."},
+    {d:"Día 6",r:"Isaías 17–21",note:"Oráculos contra Damasco, Etiopía, Egipto, Edom."},
+    {d:"Día 7",r:"Isaías 22–24",note:"Oráculos sobre Jerusalén y Tiro; el apocalipsis de Isaías."},
+  ]},
+  {n:32,title:"Isaías — esperanza y salvación",ctx:"~735–700 a.C. • Promesas de paz y del reinado futuro de Dios.",days:[
+    {d:"Día 1",r:"Isaías 25–27",note:"Himno de victoria; la resurrección de los muertos; la viña de Dios."},
+    {d:"Día 2",r:"Isaías 28–30",note:"Advertencias a Efraín y Judá; alianza con Egipto condenada."},
+    {d:"Día 3",r:"Isaías 31–33",note:"Ay de los que descienden a Egipto; el rey reinará con justicia."},
+    {d:"Día 4",r:"Isaías 34–35",note:"Juicio sobre las naciones; el desierto florecerá; el camino sagrado."},
+    {d:"Día 5",r:"2 Reyes 15–16; 2 Crónicas 26–27",note:"Reyes de Israel y Judá; Asiria avanza."},
+    {d:"Día 6",r:"2 Reyes 17",note:"Caída de Samaria en 722 a.C.; las diez tribus dispersadas para siempre."},
+    {d:"Día 7",r:"Miqueas 1–4",note:"Miqueas: juicio sobre Samaria; 'de Belén saldrá el gobernante'."},
+  ]},
+  {n:33,title:"Ezequías y la crisis asiria",ctx:"~701 a.C. • Senaquerib sitia Jerusalén; el milagro de la liberación.",days:[
+    {d:"Día 1",r:"Miqueas 5–7",note:"El Mesías de Belén; juicio; misericordia; oración final."},
+    {d:"Día 2",r:"Nahum 1–3",note:"Nahum: la caída de Nínive — juicio sobre la cruel Asiria."},
+    {d:"Día 3",r:"Isaías 36–37; 2 Reyes 18–19",note:"Senaquerib sitia Jerusalén; Ezequías ora; el ángel mata a 185.000."},
+    {d:"Día 4",r:"Isaías 38–39; 2 Reyes 20",note:"Enfermedad y curación de Ezequías; los enviados de Babilonia."},
+    {d:"Día 5",r:"2 Crónicas 29–30",note:"Reforma de Ezequías; la Pascua restaurada."},
+    {d:"Día 6",r:"2 Crónicas 31–32",note:"Organización del clero; la invasión asiria — Crónicas."},
+    {d:"Día 7",r:"Salmos 46; Salmos 48; Salmos 76",note:"Salmos de confianza compuestos en tiempos de Ezequías."},
+  ]},
+  {n:34,title:"Los últimos reyes de Judá",ctx:"~697–609 a.C. • Manasés se aparta; Josías reforma; el fin se acerca.",days:[
+    {d:"Día 1",r:"2 Reyes 21; 2 Crónicas 33",note:"Manasés — el peor rey de Judá; su conversión en el exilio."},
+    {d:"Día 2",r:"Sofonías 1–3",note:"Sofonías: el Día del Señor está cerca; pero habrá un remanente."},
+    {d:"Día 3",r:"2 Reyes 22–23; 2 Crónicas 34–35",note:"Josías encuentra el libro de la Ley; la gran reforma religiosa."},
+    {d:"Día 4",r:"Habacuc 1–3",note:"Habacuc cuestiona a Dios; Dios responde; himno de fe en la incertidumbre."},
+    {d:"Día 5",r:"Jeremías 1–3",note:"Llamado de Jeremías desde el vientre; Israel, la esposa infiel."},
+    {d:"Día 6",r:"Jeremías 4–6",note:"El enemigo viene del norte; Jeremías llora sobre Jerusalén."},
+    {d:"Día 7",r:"Jeremías 7–9",note:"El sermón del templo; no confíes en el templo, confía en Dios."},
+  ]},
+  {n:35,title:"Jeremías — el profeta de las lágrimas",ctx:"~627–605 a.C. • Jeremías predica y sufre rechazo constante.",days:[
+    {d:"Día 1",r:"Jeremías 10–12",note:"Los ídolos son vanidad; Jeremías cuestiona a Dios sobre la injusticia."},
+    {d:"Día 2",r:"Jeremías 13–15",note:"El cinto de lino podrido; a Jeremías se le prohíbe casarse."},
+    {d:"Día 3",r:"Jeremías 16–18",note:"Señales proféticas; el alfarero y el barro — Dios moldea a las naciones."},
+    {d:"Día 4",r:"Jeremías 19–22",note:"La vasija rota; Jeremías encarcelado por Pasur; los reyes de Judá juzgados."},
+    {d:"Día 5",r:"Jeremías 23–25",note:"Pastores falsos; el renuevo justo; anuncio de los setenta años de exilio."},
+    {d:"Día 6",r:"Jeremías 26–28",note:"Jeremías casi es ejecutado; el yugo de Babilonia; Hananías, el falso profeta."},
+    {d:"Día 7",r:"Jeremías 29–30",note:"La carta a los exiliados: busquen el bien de la ciudad; días de restauración."},
+  ]},
+  {n:36,title:"El nuevo pacto y la caída de Jerusalén",ctx:"~605–586 a.C. • La promesa de un nuevo pacto; el Templo destruido.",days:[
+    {d:"Día 1",r:"Jeremías 31–32",note:"El nuevo pacto escrito en el corazón; Jeremías compra un campo durante el asedio."},
+    {d:"Día 2",r:"Jeremías 33–35",note:"Restauración prometida; el renuevo de David; los recabitas fieles."},
+    {d:"Día 3",r:"Jeremías 36–38",note:"El rollo quemado por el rey; Jeremías en la cisterna."},
+    {d:"Día 4",r:"Jeremías 39–42",note:"Caída de Jerusalén; Jeremías liberado por los babilonios."},
+    {d:"Día 5",r:"Jeremías 43–45",note:"Huida a Egipto en contra del consejo de Jeremías."},
+    {d:"Día 6",r:"Jeremías 46–48",note:"Oráculos contra Egipto, los filisteos y Moab."},
+    {d:"Día 7",r:"Jeremías 49–50",note:"Oráculos contra Edom, Damasco, Babilonia."},
+  ]},
+  {n:37,title:"Lamentaciones y el exilio",ctx:"~586 a.C. • Jeremías llora sobre las ruinas de Jerusalén.",days:[
+    {d:"Día 1",r:"Jeremías 51–52",note:"Anuncio de la caída final de Babilonia; relato histórico del fin de Judá."},
+    {d:"Día 2",r:"Lamentaciones 1–2",note:"'Jerusalén pecó gravemente'; la ciudad en ruinas llora."},
+    {d:"Día 3",r:"Lamentaciones 3",note:"'Las misericordias del Señor nunca terminan, se renuevan cada mañana'."},
+    {d:"Día 4",r:"Lamentaciones 4–5",note:"Horrores del sitio; oración por el regreso de Dios."},
+    {d:"Día 5",r:"Ezequiel 1–2",note:"La visión de la gloria de Dios en el exilio; Ezequiel es llamado."},
+    {d:"Día 6",r:"Ezequiel 3–5",note:"Ezequiel come el rollo; la maqueta del sitio; señales proféticas."},
+    {d:"Día 7",r:"Ezequiel 6–8",note:"Juicio sobre los montes; la visión de las abominaciones en el Templo."},
+  ]},
+  {n:38,title:"Ezequiel en el exilio",ctx:"~593–571 a.C. • Visiones y profecías del exilio babilónico.",days:[
+    {d:"Día 1",r:"Ezequiel 9–11",note:"La gloria de Dios abandona el Templo; promesa de un nuevo corazón."},
+    {d:"Día 2",r:"Ezequiel 12–14",note:"Señales de la deportación; falsos profetas condenados."},
+    {d:"Día 3",r:"Ezequiel 15–17",note:"La viña inútil; Jerusalén, la esposa infiel; la parábola de las águilas."},
+    {d:"Día 4",r:"Ezequiel 18–20",note:"Cada uno responde por sí mismo; revisión de la historia de Israel."},
+    {d:"Día 5",r:"Ezequiel 21–23",note:"La espada de Babilonia; las dos hermanas infieles — Samaria y Jerusalén."},
+    {d:"Día 6",r:"Ezequiel 24–26",note:"La olla hirviendo; muerte de la esposa de Ezequiel; oráculos contra Tiro."},
+    {d:"Día 7",r:"Ezequiel 27–28",note:"El lamento por Tiro; la caída del rey de Tiro — el querubín ungido."},
+  ]},
+  {n:39,title:"Ezequiel — esperanza y restauración",ctx:"~585–571 a.C. • El valle de los huesos; el templo escatológico.",days:[
+    {d:"Día 1",r:"Ezequiel 29–31",note:"Oráculos contra Egipto y el faraón."},
+    {d:"Día 2",r:"Ezequiel 32–33",note:"Lamento por Egipto; Ezequiel, el centinela del pueblo."},
+    {d:"Día 3",r:"Ezequiel 34–35",note:"Pastores que abandonaron el rebaño; vendrá el buen pastor."},
+    {d:"Día 4",r:"Ezequiel 36–37",note:"Nuevo espíritu y nuevo corazón; el valle de huesos secos que cobran vida."},
+    {d:"Día 5",r:"Ezequiel 38–39",note:"Gog y Magog; la batalla final y la victoria de Dios."},
+    {d:"Día 6",r:"Ezequiel 40–41",note:"La visión del Templo escatológico — medidas y estructura."},
+    {d:"Día 7",r:"Ezequiel 42–44",note:"Aposentos sacerdotales; la gloria regresa al Templo."},
+  ]},
+]},
+
+{name:"Exilio y Restauración",num:"VI",meta:"Semanas 40–45",weeks:[
+  {n:40,title:"Daniel en Babilonia",ctx:"~605–536 a.C. • Daniel interpreta sueños; el horno ardiente.",days:[
+    {d:"Día 1",r:"Ezequiel 45–48",note:"El Templo de Ezequiel: distribución de la tierra; el río que sana."},
+    {d:"Día 2",r:"Daniel 1–2",note:"Daniel rechaza el alimento del rey; interpreta el sueño de la estatua."},
+    {d:"Día 3",r:"Daniel 3",note:"El horno ardiente; Sadrac, Mesac y Abed-nego."},
+    {d:"Día 4",r:"Daniel 4–5",note:"Nabucodonosor como un buey; la escritura en la pared para Belsasar."},
+    {d:"Día 5",r:"Daniel 6",note:"Daniel en el foso de los leones; Dios lo salva."},
+    {d:"Día 6",r:"Daniel 7–8",note:"Visiones de las cuatro bestias; el Anciano de días; el carnero y el macho cabrío."},
+    {d:"Día 7",r:"Daniel 9–12",note:"La oración de Daniel; las 70 semanas; visión del fin de los tiempos."},
+  ]},
+  {n:41,title:"Isaías 40–55 — la consolación",ctx:"~540 a.C. • Consuelen a mi pueblo; el Siervo Sufriente.",days:[
+    {d:"Día 1",r:"Isaías 40–41",note:"'Consuelen, consuelen a mi pueblo'; el Señor no se cansa."},
+    {d:"Día 2",r:"Isaías 42–43",note:"Primer cántico del Siervo; 'no temas, porque yo estoy contigo'."},
+    {d:"Día 3",r:"Isaías 44–45",note:"Los ídolos no son nada; Ciro, el ungido de Dios, liberará al pueblo."},
+    {d:"Día 4",r:"Isaías 46–48",note:"La caída de los dioses de Babilonia; salida del cautiverio."},
+    {d:"Día 5",r:"Isaías 49–50",note:"Segundo y tercer cánticos del Siervo; el Señor no olvidó a Sión."},
+    {d:"Día 6",r:"Isaías 51–52",note:"'Despierta, despierta, vístete de fuerza'; los pies del mensajero."},
+    {d:"Día 7",r:"Isaías 53",note:"El cuarto cántico: el Siervo Sufriente — herido por nuestras transgresiones."},
+  ]},
+  {n:42,title:"Isaías 56–66 y el decreto de Ciro",ctx:"~539–538 a.C. • Nueva creación; Ciro libera a los exiliados.",days:[
+    {d:"Día 1",r:"Isaías 54–56",note:"La tienda ampliada; 'vengan, compren sin dinero'; casa de oración."},
+    {d:"Día 2",r:"Isaías 57–59",note:"Consuelo para el contrito; el ayuno verdadero; manos llenas de sangre."},
+    {d:"Día 3",r:"Isaías 60–62",note:"'Levántate, resplandece'; el año de gracia del Señor."},
+    {d:"Día 4",r:"Isaías 63–66",note:"La ira y la misericordia; nueva creación — cielos nuevos y tierra nueva."},
+    {d:"Día 5",r:"Esdras 1–2",note:"Decreto de Ciro; los exiliados regresan; lista de los que volvieron."},
+    {d:"Día 6",r:"Esdras 3–4",note:"El altar reconstruido; fundación del Templo; oposición de los adversarios."},
+    {d:"Día 7",r:"Hageo 1–2; Zacarías 1–2",note:"Hageo anima la reconstrucción; primeras visiones de Zacarías."},
+  ]},
+  {n:43,title:"Zacarías y la reconstrucción del Templo",ctx:"~520–516 a.C. • Visiones mesiánicas; el Templo concluido.",days:[
+    {d:"Día 1",r:"Zacarías 3–6",note:"Josué el sumo sacerdote purificado; Zorobabel y el candelabro; visiones."},
+    {d:"Día 2",r:"Zacarías 7–10",note:"El ayuno verdadero; promesa de restauración; el rey humilde y el pastor."},
+    {d:"Día 3",r:"Zacarías 11–14",note:"Treinta monedas de plata; el pastor herido; el Señor reina sobre toda la tierra."},
+    {d:"Día 4",r:"Esdras 5–6",note:"Profetas animan; el Templo concluido en 516 a.C.; celebración."},
+    {d:"Día 5",r:"Ester 1–3",note:"Ester: Asuero destrona a Vasti; Ester elegida reina; conspiración de Amán."},
+    {d:"Día 6",r:"Ester 4–6",note:"Ester se arriesga ante el rey; Mardoqueo honrado; Amán humillado."},
+    {d:"Día 7",r:"Ester 7–10",note:"Amán ejecutado; los judíos se defienden; se instituye Purim."},
+  ]},
+  {n:44,title:"Esdras, Nehemías y Malaquías",ctx:"~458–397 a.C. • Reforma espiritual; muros reconstruidos; silencio profético.",days:[
+    {d:"Día 1",r:"Esdras 7–8",note:"Esdras llega a Jerusalén con autorización del rey persa."},
+    {d:"Día 2",r:"Esdras 9–10",note:"Confesión de Esdras; disolución de los matrimonios mixtos."},
+    {d:"Día 3",r:"Nehemías 1–3",note:"Nehemías ora y planea; recibe permiso; organiza la reconstrucción."},
+    {d:"Día 4",r:"Nehemías 4–6",note:"Oposición; Nehemías arma a los trabajadores; el muro terminado en 52 días."},
+    {d:"Día 5",r:"Nehemías 7–8",note:"La lista de los que regresaron; Esdras lee la Ley al pueblo."},
+    {d:"Día 6",r:"Nehemías 9–11",note:"Gran confesión nacional; renovación del pacto; pueblos en Jerusalén."},
+    {d:"Día 7",r:"Nehemías 12–13; Malaquías 1–4",note:"Dedicación de los muros; Malaquías: vendrá el precursor — 400 años de silencio."},
+  ]},
+]},
+
+{name:"Los Evangelios",num:"VII",meta:"Semanas 46–50",weeks:[
+  {n:45,title:"El nacimiento y la infancia de Jesús",ctx:"~6 a.C.–27 d.C. • El Verbo se hace carne; Juan el Bautista prepara el camino.",days:[
+    {d:"Día 1",r:"Lucas 1",note:"Anuncio a Zacarías y a María; el Magníficat."},
+    {d:"Día 2",r:"Lucas 2",note:"Nacimiento en Belén; los pastores; Jesús en el Templo a los 12 años."},
+    {d:"Día 3",r:"Mateo 1–2",note:"Genealogía y nacimiento; los magos; huida a Egipto."},
+    {d:"Día 4",r:"Marcos 1; Juan 1:1-18",note:"Juan el Bautista; bautismo de Jesús; 'En el principio era el Verbo'."},
+    {d:"Día 5",r:"Mateo 3–4; Marcos 1:12-13",note:"Bautismo de Jesús; tentación en el desierto; inicio del ministerio."},
+    {d:"Día 6",r:"Juan 1:19–2:12",note:"Juan señala a Jesús; los primeros discípulos; las bodas de Caná."},
+    {d:"Día 7",r:"Juan 2:13–3:36",note:"Jesús expulsa a los mercaderes; Nicodemo; 'Dios amó tanto al mundo'."},
+  ]},
+  {n:46,title:"El Sermón del Monte",ctx:"~27–28 d.C. • Las enseñanzas centrales de Jesús.",days:[
+    {d:"Día 1",r:"Mateo 5:1–48",note:"Las bienaventuranzas; sal y luz; la Ley profundizada."},
+    {d:"Día 2",r:"Mateo 6",note:"Oración, ayuno y limosna en secreto; el Padrenuestro; no se preocupen."},
+    {d:"Día 3",r:"Mateo 7; Lucas 6:17-49",note:"No juzguen; pidan, busquen, llamen; la casa sobre la roca."},
+    {d:"Día 4",r:"Lucas 7; Mateo 8:1-13",note:"El centurión; el hijo de la viuda; Juan el Bautista pregunta sobre Jesús."},
+    {d:"Día 5",r:"Mateo 8:14-34; Marcos 4:35-5:20",note:"Sanidades; Jesús calma la tempestad; los demonios y los cerdos."},
+    {d:"Día 6",r:"Marcos 5:21-43; Lucas 8",note:"La mujer con hemorragia; la hija de Jairo es resucitada."},
+    {d:"Día 7",r:"Mateo 9–10",note:"Llamado de Mateo; envío de los doce; instrucciones misioneras."},
+  ]},
+  {n:47,title:"Parábolas y milagros",ctx:"~28–29 d.C. • Jesús enseña en parábolas y alimenta multitudes.",days:[
+    {d:"Día 1",r:"Mateo 11–12; Lucas 11",note:"Juan en prisión; ciudades sin arrepentimiento; el Señor del sábado."},
+    {d:"Día 2",r:"Mateo 13",note:"Las parábolas del Reino: el sembrador, la cizaña, la mostaza, el tesoro, la perla."},
+    {d:"Día 3",r:"Marcos 6; Mateo 14:1-21",note:"Muerte de Juan el Bautista; alimentación de los 5.000."},
+    {d:"Día 4",r:"Mateo 14:22-36; Juan 6",note:"Jesús camina sobre las aguas; el pan de vida."},
+    {d:"Día 5",r:"Mateo 15–16; Marcos 7–8",note:"La tradición de los fariseos; la confesión de Pedro: 'tú eres el Cristo'."},
+    {d:"Día 6",r:"Mateo 17; Marcos 9; Lucas 9:28-62",note:"La Transfiguración; el niño epiléptico; ¿quién es el mayor?"},
+    {d:"Día 7",r:"Juan 7–8",note:"Jesús en la fiesta de los Tabernáculos; 'yo soy la luz del mundo'."},
+  ]},
+  {n:48,title:"Las últimas enseñanzas",ctx:"~29–30 d.C. • Jerusalén se acerca; confrontaciones con los líderes.",days:[
+    {d:"Día 1",r:"Lucas 10; Juan 10",note:"Los setenta enviados; el buen samaritano; el buen pastor."},
+    {d:"Día 2",r:"Lucas 15–16",note:"La oveja perdida; el hijo pródigo; el mayordomo infiel."},
+    {d:"Día 3",r:"Juan 11",note:"La resurrección de Lázaro; 'yo soy la resurrección y la vida'."},
+    {d:"Día 4",r:"Lucas 17–18; Mateo 19",note:"El reino de Dios; el fariseo y el publicano; el joven rico."},
+    {d:"Día 5",r:"Mateo 20–21; Marcos 10–11",note:"Los trabajadores de la viña; Zaqueo; entrada triunfal en Jerusalén."},
+    {d:"Día 6",r:"Mateo 22–23; Marcos 12",note:"Las parábolas de los invitados; el mandamiento más importante; ay de los escribas."},
+    {d:"Día 7",r:"Mateo 24–25; Marcos 13",note:"El discurso profético; las diez vírgenes; los talentos; el juicio final."},
+  ]},
+  {n:49,title:"La Pasión y la Resurrección",ctx:"~30 d.C. • La última cena; la crucifixión; la resurrección.",days:[
+    {d:"Día 1",r:"Juan 13–14",note:"Jesús lava los pies de los discípulos; 'yo soy el camino, la verdad y la vida'."},
+    {d:"Día 2",r:"Juan 15–17",note:"La vid verdadera; la promesa del Espíritu; la oración sacerdotal."},
+    {d:"Día 3",r:"Mateo 26; Marcos 14; Lucas 22",note:"La última cena; Getsemaní; traición y arresto."},
+    {d:"Día 4",r:"Mateo 27; Marcos 15; Lucas 23; Juan 18–19",note:"Juicios; crucifixión; muerte."},
+    {d:"Día 5",r:"Mateo 28; Marcos 16; Lucas 24:1-35",note:"La resurrección; la tumba vacía; apariciones."},
+    {d:"Día 6",r:"Lucas 24:36-53; Juan 20–21",note:"Jesús se aparece; Tomás; restauración de Pedro."},
+    {d:"Día 7",r:"Hechos 1–2",note:"La ascensión; Pentecostés; Pedro predica; 3.000 se convierten."},
+  ]},
+]},
+
+{name:"La Iglesia Primitiva y las Epístolas",num:"VIII",meta:"Semanas 50–52",weeks:[
+  {n:50,title:"Hechos de los Apóstoles — la Iglesia se expande",ctx:"~30–48 d.C. • Del Espíritu Santo al primer viaje misionero.",days:[
+    {d:"Día 1",r:"Hechos 3–5",note:"Pedro sana al cojo; Ananías y Safira; crecimiento de la Iglesia."},
+    {d:"Día 2",r:"Hechos 6–8",note:"Esteban, el primer mártir; persecución; Felipe y el etíope."},
+    {d:"Día 3",r:"Hechos 9–10",note:"Conversión de Pablo; Pedro y Cornelio — el Espíritu llega a los gentiles."},
+    {d:"Día 4",r:"Hechos 11–13",note:"La Iglesia en Antioquía; primer viaje misionero de Pablo."},
+    {d:"Día 5",r:"Hechos 14–15; Gálatas 1–2",note:"Iglesias fundadas; concilio de Jerusalén; Pablo confronta a Pedro."},
+    {d:"Día 6",r:"Gálatas 3–4; Santiago 1–2",note:"Justificación por la fe; hijos libres; la fe sin obras está muerta."},
+    {d:"Día 7",r:"Santiago 3–5; Hechos 16–17",note:"Control de la lengua; segundo viaje; Filipos; Atenas."},
+  ]},
+  {n:51,title:"Las cartas de Pablo",ctx:"~50–62 d.C. • Las grandes cartas a las iglesias del Mediterráneo.",days:[
+    {d:"Día 1",r:"1 Tesalonicenses 1–5; 2 Tesalonicenses 1–3",note:"Esperanza en el regreso de Cristo; perseverancia bajo persecución."},
+    {d:"Día 2",r:"Hechos 18–19; 1 Corintios 1–4",note:"Pablo en Corinto y Éfeso; la sabiduría de la cruz; divisiones."},
+    {d:"Día 3",r:"1 Corintios 5–10",note:"Disciplina; matrimonio; alimentos sacrificados; no hagas tropezar a tu hermano."},
+    {d:"Día 4",r:"1 Corintios 11–16",note:"La cena del Señor; el himno al amor; la resurrección de los muertos."},
+    {d:"Día 5",r:"2 Corintios 1–7",note:"Tesoro en vasos de barro; el nuevo pacto; reconciliación."},
+    {d:"Día 6",r:"2 Corintios 8–13; Romanos 1–4",note:"La colecta; el aguijón en la carne; todos pecaron; fe como la de Abraham."},
+    {d:"Día 7",r:"Romanos 5–11",note:"Paz con Dios; ninguna condenación; el misterio de Israel."},
+  ]},
+  {n:52,title:"El cierre del canon bíblico",ctx:"~57–95 d.C. • Las últimas cartas y el Apocalipsis.",days:[
+    {d:"Día 1",r:"Romanos 12–16; Efesios 1–3",note:"Ofrezcan sus cuerpos; amor genuino; salvos por gracia."},
+    {d:"Día 2",r:"Efesios 4–6; Filipenses 1–4",note:"La armadura de Dios; 'todo lo puedo en aquel que me fortalece'."},
+    {d:"Día 3",r:"Colosenses 1–4; Filemón; 1 Timoteo 1–3",note:"Cristo cabeza de todo; Filemón; cualidades de los líderes."},
+    {d:"Día 4",r:"1 Timoteo 4–6; Tito 1–3; 2 Timoteo 1–4",note:"Sana doctrina; 'he peleado la buena batalla, he terminado la carrera'."},
+    {d:"Día 5",r:"1 Pedro 1–5; 2 Pedro 1–3; Judas",note:"Esperanza viva; sufrir como cristiano; contender por la fe."},
+    {d:"Día 6",r:"Hebreos 1–7; 1 Juan 1–3",note:"Jesús, sumo sacerdote eterno; 'Dios es amor'."},
+    {d:"Día 7",r:"Hebreos 8–13; 1 Juan 4–5; 2 Juan; 3 Juan; Apocalipsis 1–22",note:"Los héroes de la fe; la victoria que vence al mundo; la Nueva Jerusalén — 'ven, Señor Jesús'."},
+  ]},
+]},
+];
+
+// ─── TIMELINE ───
+const TIMELINE=[
+  {
+    era:"La Creación y los Primeros Tiempos",
+    date:"Desde el inicio del tiempo",
+    desc:"La Biblia abre con una de las frases más conocidas de la historia de la literatura: 'En el principio, Dios creó los cielos y la tierra.' Génesis 1 presenta la creación en seis días — luz, firmamento, tierra seca, vegetación, astros, animales y, por último, el ser humano. Un detalle curioso: la luz se crea el primer día, pero el sol y la luna aparecen recién el cuarto. Para los estudiosos, esto es una declaración teológica deliberada — la luz pertenece a Dios, no a los astros que las culturas vecinas adoraban como dioses.\n\nEl Jardín del Edén (en hebreo, 'edén' significa 'deleite' o 'abundancia') se describe como un lugar con cuatro ríos — dos identificables: el Tigris y el Éufrates, en Mesopotamia. Adán recibe la tarea de nombrar a todos los animales — un detalle que en el contexto hebreo antiguo implicaba autoridad y una relación íntima sobre las criaturas.\n\nLa serpiente del Edén no es llamada Satanás en Génesis — esa identificación llegó después en la tradición judía y cristiana. El texto hebreo la llama simplemente 'la más astuta de todas las bestias del campo'. Después de la caída, Dios hace algo inesperado: hace vestiduras de piel para Adán y Eva — el primer acto de cuidado divino incluso después de la desobediencia.",
+    books:["Génesis 1–3"]
+  },
+  {
+    era:"Caín, Abel, Noé y el Diluvio",
+    date:"Primeras generaciones",
+    desc:"El primer asesinato de la Biblia ocurre dentro de una familia: Caín mata a Abel por envidia de la aceptación de su ofrenda. La marca que Dios pone en Caín no era un castigo — era una protección. 'Para que nadie lo matara', dice el texto. Un detalle que invierte la lectura superficial.\n\nLa genealogía de Génesis 5 enumera patriarcas con edades extraordinarias — Matusalén vivió 969 años, el más longevo de la Biblia. Los estudiosos debaten si estos números son literales, simbólicos (como en las listas de reyes sumerios, que también enumeraban reinados de miles de años), o si usaban un sistema de cómputo distinto.\n\nNoé lleva siete pares de animales limpios y un par de los impuros — no solo una pareja de cada, como fijó la tradición popular. El arca, según las dimensiones de Génesis 6, habría tenido aproximadamente 135 metros de largo — comparable a un barco de carga moderno. El diluvio dura 40 días de lluvia, pero Noé permanece en el arca más de un año antes de que la tierra esté lo suficientemente seca para salir.\n\nDespués del diluvio, Dios establece el primer pacto formal con la humanidad — el arcoíris como señal. La palabra hebrea usada es 'keshet', que también significa arco de guerra. Dios cuelga su arco — un gesto de paz.",
+    books:["Génesis 4–9"]
+  },
+  {
+    era:"Babel y el llamado de Abraham",
+    date:"~2200–2000 a.C.",
+    desc:"La Torre de Babel (Génesis 11) es más que una historia sobre la soberbia arquitectónica. En hebreo, 'Babel' suena como la palabra para 'confusión'. La torre era probablemente un zigurat — estructura religiosa común en Mesopotamia, construida para que los dioses 'descendieran' hasta el pueblo. La ironía del texto es sutil: Dios necesita 'bajar' para ver la torre que los humanos creían tan alta.\n\nAbram (renombrado Abraham más tarde) vivía en Ur de los caldeos — una de las ciudades más avanzadas del mundo antiguo, con escritura cuneiforme, comercio internacional y templos elaborados. Cuando Dios lo llama a salir, abandona comodidad, estatus y seguridad por una promesa sin mapa.\n\nEl pacto de Dios con Abraham en Génesis 15 usa un ritual antiguo: animales partidos por la mitad, dispuestos en dos filas, y las partes contratantes pasaban por en medio — simbolizando 'que me pase lo mismo si rompo este pacto'. El detalle extraordinario: solo Dios pasa por en medio (representado como una antorcha de fuego). Abraham duerme. El pacto es unilateral — Dios asume todo el compromiso.\n\nCuriosidad: Abraham tenía 75 años cuando partió de Harán. Tendría hijos hasta los 100 años. Isaías 51 lo llama 'la roca de donde fueron tallados'.",
+    books:["Génesis 11–25"]
+  },
+  {
+    era:"Isaac, Jacob y las Doce Tribus",
+    date:"~2000–1700 a.C.",
+    desc:"El sacrificio de Isaac en Génesis 22 es uno de los textos más estudiados de la Biblia. Abraham obedece sin cuestionar — pero el texto registra sus palabras a Isaac: 'Dios proveerá el cordero'. En hebreo, la palabra para 'proveer' (yireh) viene de la misma raíz que 'ver'. El lugar se llama 'Yhwh-yireh' — 'el Señor verá' o 'el Señor proveerá'. En el último segundo, un carnero atrapado por los cuernos en un matorral sustituye a Isaac.\n\nJacob es uno de los personajes más complejos de la Biblia — engañador, fugitivo, pero también el que lucha con Dios. Su noche de lucha junto al río Jaboc (Génesis 32) termina con él cojeando, pero bendecido. Su nombre cambia a 'Israel' — que puede traducirse como 'el que luchó con Dios'. La nación entera llevará ese nombre.\n\nJosé, el undécimo hijo de Jacob, recibe una 'túnica de varios colores' (o 'túnica de mangas largas' — la traducción se debate). Vendido por 20 monedas de plata por sus propios hermanos — el mismo precio de un esclavo joven en el Egipto del siglo XVII a.C. En Egipto, asciende de esclavo a gobernador en dos movimientos narrativos dramáticos: la falsa acusación de Potifar y la interpretación de los sueños del faraón.\n\nEl reencuentro de José con sus hermanos es una de las escenas más conmovedoras de la literatura mundial. Llora tres veces antes de revelarse.",
+    books:["Génesis 25–50"]
+  },
+  {
+    era:"Job — el libro más antiguo de la Biblia",
+    date:"~2000–1700 a.C. (época de los patriarcas)",
+    desc:"Job es probablemente el libro más antiguo de la Biblia en términos de composición, anterior incluso a Moisés. Él no es israelita — vive en Uz, posiblemente en Arabia o Edom — lo que hace su historia universal desde el inicio.\n\nEl libro empieza en prosa y termina en prosa, pero en el medio hay 35 capítulos de poesía densa y filosófica — algunos de los más bellos escritos en hebreo. Los tres amigos de Job (Elifaz, Bildad y Zofar) llegan y permanecen en silencio durante siete días antes de hablar. Ese es el mejor consejo que darán en todo el libro. Cuando abren la boca, se equivocan.\n\nLa respuesta de Dios a Job, en los capítulos 38–41, es sorprendente: en lugar de explicar el sufrimiento, Dios hace preguntas. '¿Dónde estabas cuando puse los cimientos de la tierra?' No hay respuesta al 'por qué'. Solo hay presencia.\n\nCuriosidad: al final, Dios dice que Job habló correctamente sobre Él — y los amigos, con sus teologías ordenadas, no. El sufrimiento que no tiene sentido es más honesto con Dios que la teología que pretende tener respuestas fáciles.",
+    books:["Job 1–42"]
+  },
+  {
+    era:"El Éxodo — la gran liberación",
+    date:"~1446 a.C.",
+    desc:"Cuatro siglos después de José, los descendientes de Israel suman alrededor de 600.000 hombres — más familias, lo que sugiere una población de 2 a 3 millones de personas. Los faraones que no conocieron a José comenzaron a temerles: 'se han hecho más numerosos y poderosos que nosotros'. La solución fue la esclavitud y, luego, el infanticidio sistemático.\n\nMoisés se salva de las aguas por una ironía histórica: la hija del faraón que ordenó la muerte de los bebés hebreos adopta al bebé que será el liberador. Su nombre egipcio (Mosheh o Meses) aparece en faraones como Tutmosis y Ramsés — es un nombre real egipcio.\n\nLas Diez Plagas están estructuradas como un juicio sistemático sobre los dioses egipcios: el Nilo se convierte en sangre (Hapi, dios del Nilo), las ranas (Heket, diosa rana), el sol se oscurece (Ra, el dios supremo). La décima plaga — muerte de los primogénitos — alcanza al propio hijo del faraón, considerado un dios vivo.\n\nEl cruce del Mar Rojo (en hebreo: Yam Suf, 'mar de juncos') fue el evento fundacional de la fe de Israel. Se menciona más veces en el Antiguo Testamento que cualquier otro milagro. 'El Señor es mi guerrero', canta Moisés — posiblemente el poema más antiguo de la Biblia, en Éxodo 15.",
+    books:["Éxodo 1–15"]
+  },
+  {
+    era:"El Monte Sinaí y la Ley",
+    date:"~1446 a.C.",
+    desc:"El pueblo llega al Monte Sinaí 50 días después de salir de Egipto — fecha que los judíos celebran como Shavuot (Semanas) y los cristianos como Pentecostés. El número 50 carga peso simbólico en toda la Biblia.\n\nLos Diez Mandamientos (en hebreo: 'Diez Palabras') son pronunciados directamente por Dios a todo el pueblo — el único momento en la Biblia en que esto ocurre. El pueblo se aterra tanto que pide a Moisés que sea intermediario de ahí en adelante.\n\nEl Tabernáculo, descrito en detalle en los últimos capítulos de Éxodo, era una estructura portátil de altísima calidad: madera de acacia cubierta de oro, telas de lino fino con bordados de querubines, y el Arca del Pacto en el interior del Lugar Santísimo — la morada de Dios entre el pueblo. Cuando estuvo lista, la gloria de Dios la llenó de tal forma que ni Moisés podía entrar.\n\nLevítico — el libro que la mayoría abandona — era el manual de cómo debía vivir el pueblo santo. Cada ley sobre animales puros, enfermedades de la piel o telas con moho era parte de un sistema de distinciones que enseñaba: hay diferencia entre lo sagrado y lo común, entre lo puro y lo impuro. La vida tiene peso y forma.",
+    books:["Éxodo 16–40","Levítico","Números"]
+  },
+  {
+    era:"Cuarenta Años en el Desierto",
+    date:"~1446–1406 a.C.",
+    desc:"Los israelitas llegaron al borde de Canaán en menos de dos años después del Éxodo. Doce espías fueron enviados por 40 días. Diez regresaron con un informe de derrota: 'somos como langostas ante sus ojos'. Solo Caleb y Josué disintieron. El pueblo creyó a los diez — y pagó caro: cuarenta años de desierto, un año por cada día de espionaje.\n\nLa generación que salió de Egipto no entraría a la Tierra Prometida — excepto Caleb y Josué. Esto significa que Moisés, que tenía 80 años en el Éxodo, lideró al pueblo por 40 años más y murió a los 120 sin entrar a Canaán. El texto dice que sus ojos 'no habían perdido su brillo'. Vio la tierra desde la cima del Monte Nebo — hoy en Jordania — y murió allí.\n\nNúmeros 21 registra la serpiente de bronce: el pueblo era mordido por serpientes y se curaba al mirar una serpiente de bronce levantada en un poste. Siglos después, Jesús usaría esa imagen para hablar de sí mismo (Juan 3:14).\n\nDeuteronomio es el 'segundo discurso de la Ley' — Moisés repitiendo y profundizando la Torá para la nueva generación que nació en el desierto y nunca conoció Egipto. El Shemá — 'Escucha, Israel, el Señor es nuestro Dios, el Señor es uno' — está en ese libro. Jesús lo citará como el mandamiento más importante.",
+    books:["Números","Deuteronomio"]
+  },
+  {
+    era:"La Conquista de Canaán",
+    date:"~1406–1375 a.C.",
+    desc:"Josué cruza el Río Jordán durante la crecida — el momento menos propicio para un cruce, y por lo tanto el más impresionante. Las aguas se separan, y se sacan doce piedras del lecho seco para armar un memorial: 'cuando sus hijos pregunten qué significan estas piedras, cuéntenles'.\n\nJericó es la ciudad más antigua habitada continuamente del mundo — ya tenía murallas cuando Abraham pasó por la región. La caída de sus murallas ocurre sin arietes ni máquinas de guerra: siete días de marcha, siete vueltas el séptimo día, trompetas y un grito. Los arqueólogos encontraron evidencia de murallas que cayeron hacia afuera — inusual en conquistas normales, donde las murallas caen hacia dentro.\n\nRahab, la prostituta que escondió a los espías, se convierte en parte del linaje de David — y de Jesús. Es una de las cuatro mujeres mencionadas en la genealogía de Mateo 1, todas con historias fuera de lo común.\n\nLa distribución de la tierra entre las tribus por sorteo (Josué 14–19) puede parecer burocrática, pero era una declaración teológica: la tierra no pertenecía a nadie por mérito o conquista militar — era herencia, regalo. Caleb, con 85 años, pide la montaña más difícil: 'todavía estoy tan fuerte como el día en que Moisés me envió'.",
+    books:["Josué"]
+  },
+  {
+    era:"El Período de los Jueces",
+    date:"~1375–1050 a.C.",
+    desc:"El libro de Jueces presenta un ciclo que se repite siete veces: apostasía → opresión → clamor → liberación → paz → apostasía. Es un retrato honesto y sombrío — sin idealizar a los líderes. Los jueces no eran magistrados, sino libertadores carismáticos, llamados por Dios en momentos de crisis.\n\nDébora es la única jueza mujer y una de las figuras más notables de la Biblia: profetisa, líder militar y poeta. Convoca a Barac para la batalla — él solo va si ella va también. Ella va. La victoria final la sella otra mujer, Jael, que mata al general enemigo Sísara con una estaca de tienda mientras duerme.\n\nGedeón empieza escondiendo trigo de los enemigos, termina rechazando ser rey: 'El Señor los gobernará'. Pero acepta un efod de oro de los despojos — que el pueblo termina adorando. La caída es sutil y gradual.\n\nSansón es quizás el juez más famoso — y el más trágico. Sus batallas nunca son por Israel, sino por venganzas personales. Su fuerza era una promesa de Dios, no de su musculatura — el secreto del cabello era la señal del voto nazareo, no la fibra muscular. Muere con más filisteos en su muerte que en toda su vida.\n\nRut, ambientada en este período, es un contrapunto luminoso al caos de los jueces: una historia de lealtad, bondad y redención. Rut es moabita — un pueblo que Israel debía evitar. Se convierte en bisabuela de David.",
+    books:["Jueces","Rut"]
+  },
+  {
+    era:"Samuel y el Inicio de la Monarquía",
+    date:"~1100–1010 a.C.",
+    desc:"Samuel es el último juez y el primero de los profetas en el sentido clásico — anuncia la Palabra de Dios antes de que ocurra. Su madre, Ana, lo consagró a Dios incluso antes de concebirlo, después de años de infertilidad. El cántico de Ana en 1 Samuel 2 es uno de los más bellos del Antiguo Testamento — y María lo hará eco siglos después en el Magníficat.\n\nSaúl, el primer rey de Israel, lo tenía todo: estatura, apariencia, humildad inicial. Cuando Samuel lo busca para ungirlo, está escondido entre el equipaje. Pero la monarquía comienza con una advertencia de Dios: 'No te han rechazado a ti — me han rechazado a mí como su rey'.\n\nLa caída de Saúl fue doble: primero desobedeció al no esperar al sacerdote antes de la batalla, luego perdonó al rey Agag contra una orden expresa. Samuel le dice la frase que resuena en toda la historia bíblica: 'Obedecer es mejor que sacrificar'. Saúl sigue reinando — pero el espíritu de Dios lo abandona, y se hunde en paranoia y depresión.\n\nDavid entra en la narrativa tocando el arpa para aliviar los tormentos de Saúl — una ironía que solo el texto hebreo podría construir. El joven que Saúl perseguirá por años ya está en su palacio, tocando música para él.",
+    books:["1 Samuel 1–15"]
+  },
+  {
+    era:"David — el Rey conforme al corazón de Dios",
+    date:"~1010–970 a.C.",
+    desc:"Cuando Samuel va a Belén a ungir a un nuevo rey entre los hijos de Jesé, Dios lo sorprende: 'El hombre mira las apariencias, pero el Señor mira el corazón.' Siete hijos pasan ante Samuel. Ninguno. El octavo — el más joven, olvidado en los campos con las ovejas — es David.\n\nEl combate con Goliat (1 Samuel 17) es más estratégico de lo que parece. Goliat era un soldado de infantería pesada — armadura, lanza, espada. David fue como un francotirador a distancia. La honda era un arma de guerra real, usada por unidades militares especializadas. David eligió cinco piedras — no una. Estaba preparado para el hermano mayor.\n\nEl reinado de David duró 40 años — 7 en Hebrón como rey de Judá, y 33 en Jerusalén como rey de todo Israel. Conquista Jerusalén de los jebuseos, que la llamaban 'ciudad inexpugnable'. La convierte en capital y centro religioso, trayendo el Arca del Pacto en un cortejo en el que danza 'con todas sus fuerzas' ante el pueblo.\n\nEl pecado con Betsabé y el asesinato de Urías se narran sin eufemismos. El profeta Natán lo confronta con una parábola — y David cae. El Salmo 51 nace de ese momento: 'Ten misericordia de mí, oh Dios, conforme a tu bondad'. La Biblia no oculta los pecados de sus héroes.\n\nDavid quería construir el Templo. Dios dijo no — 'has derramado mucha sangre'. Pero prometió que su hijo lo construiría. Y que de su linaje vendría un rey eterno.",
+    books:["1 Samuel 16–31","2 Samuel","1 Crónicas","Salmos"]
+  },
+  {
+    era:"Los Salmos — el alma de Israel en versos",
+    date:"~1000–400 a.C. (compuestos a lo largo de siglos)",
+    desc:"El libro de Salmos es en realidad cinco libros en uno — una antología de 150 poemas y cánticos reunida a lo largo de siglos. David escribió muchos, pero también Asaf, los hijos de Coré, Salomón, Moisés (Salmo 90, el más antiguo) y otros anónimos.\n\nLos Salmos cubren todo el espectro de la experiencia humana: alabanza extasiada (Salmo 150), desesperación profunda (Salmo 88, el único sin resolución positiva), ira (Salmo 137: 'feliz el que estrelle a tus hijos'), amor (Salmo 45), duda (Salmo 73), confianza simple (Salmo 23). No hay emoción que no encuentre voz allí.\n\nEl Salmo 22 comienza con las palabras que Jesús gritará en la cruz: 'Dios mío, Dios mío, ¿por qué me has abandonado?' — escrito por David siglos antes de Cristo, describe con un detalle impresionante: 'horadaron mis manos y mis pies', 'se reparten mis vestiduras'.\n\nEl Salmo 119 es el capítulo más largo de la Biblia — 176 versículos. Es un poema acróstico en hebreo: cada sección de 8 versículos comienza con una letra diferente del alfabeto hebreo, en orden. Una obra maestra de forma y devoción.\n\nCuriosidad: los judíos rezan los Salmos en ciclos — semanales o mensuales. Los monjes benedictinos recitan el salterio completo cada semana. Hay grupos que mantienen esa práctica desde hace 1.500 años sin interrupción.",
+    books:["Salmos"]
+  },
+  {
+    era:"Salomón — Sabiduría, Templo y Caída",
+    date:"~970–930 a.C.",
+    desc:"Salomón le pide a Dios una sola cosa: sabiduría para gobernar. Dios, impresionado, le da también lo que no pidió — riqueza y honor. Su fama se extiende tanto que la Reina de Sabá (probablemente de la región de la actual Etiopía o Yemen) viaja una jornada monumental para probarlo con 'todas sus preguntas difíciles'. Al verlo, declara que lo que escuchó era menos de la mitad de lo que vio.\n\nEl Templo de Salomón tomó siete años en construirse. El palacio de Salomón, trece. Las dimensiones del Templo eran pequeñas para los estándares modernos — alrededor de 27 metros de largo — pero la calidad era extraordinaria: cedros del Líbano, oro recubriendo el interior, querubines tallados con 4,5 metros de envergadura. Cuando se trajo el Arca y los sacerdotes salieron, la gloria de Dios llenó el lugar como una nube espesa. Los sacerdotes no pudieron seguir ministrando.\n\nProverbios, Eclesiastés y Cantar de los Cantares se atribuyen a Salomón. Eclesiastés empieza con 'Vanidad de vanidades, todo es vanidad' — y termina en 'teme a Dios y guarda sus mandamientos, porque eso es el deber de todo ser humano'. El recorrido entre estas dos frases es uno de los más honestos de la literatura universal.\n\nSalomón tuvo 700 esposas y 300 concubinas — muchos matrimonios diplomáticos con princesas de naciones vecinas. El resultado fue catastrófico: ellas trajeron a sus dioses. 'En la vejez de Salomón, sus esposas desviaron su corazón.' El rey más sabio del mundo cayó en la trampa más vieja.",
+    books:["1 Reyes 1–11","2 Crónicas 1–9","Proverbios","Eclesiastés","Cantares"]
+  },
+  {
+    era:"El Reino Dividido",
+    date:"~930–722 a.C.",
+    desc:"Cuando Salomón murió, su hijo Roboam fue a Siquem para ser confirmado como rey. El pueblo pidió que aliviara los pesados impuestos. Roboam consultó a los ancianos — que recomendaron clemencia. Luego consultó a los amigos jóvenes — que recomendaron dureza. Eligió a los jóvenes. Diez tribus se rebelaron de inmediato. El reino nunca volvería a estar unido.\n\nEl norte (Israel, capital Samaria) tuvo 19 reyes en unos 200 años — ninguno fue clasificado como fiel a Dios. El sur (Judá, capital Jerusalén) tuvo 20 reyes en 340 años — algunos buenos, muchos malos.\n\nElías es el profeta más dramático del Antiguo Testamento. Anuncia tres años y medio de sequía al rey Acab sin parpadear. Desafía a 450 profetas de Baal en el Monte Carmelo — fuego del cielo consume su sacrificio. Y luego, en un estado de colapso emocional total, huye al desierto y pide morir. Dios no lo reprende. Envía un ángel con comida y agua, y dice: 'el camino es demasiado largo para ti'.\n\nElías nunca murió — fue llevado al cielo en un torbellino con caballos de fuego. Eliseo, su sucesor, vio la escena y heredó un espíritu doble. Los milagros de Eliseo superan en número a los de Elías: multiplicación de aceite, resurrección de un niño, curación de lepra, hierro que flota en el agua, ejércitos angelicales visibles.",
+    books:["1 Reyes 12–22","2 Reyes 1–17","2 Crónicas 10–28","Amós","Oseas","Miqueas"]
+  },
+  {
+    era:"Isaías y los Profetas del Siglo VIII",
+    date:"~740–700 a.C.",
+    desc:"Isaías es llamado en una visión extraordinaria: ve el trono de Dios, serafines volando, y el humo llenando el Templo mientras la voz proclama 'Santo, Santo, Santo'. La primera reacción de Isaías es: '¡Estoy perdido! Soy un hombre de labios impuros.' Un serafín toca sus labios con un carbón del altar. Entonces Dios pregunta: '¿A quién enviaré?' E Isaías responde: 'Aquí estoy, envíame.'\n\nIsaías profetizó durante unos 60 años, bajo cuatro reyes de Judá. Sus capítulos 7 a 12 son llamados el 'Libro de Emanuel' — profecías mesiánicas que los cristianos leyeron como anuncios de Jesús: 'una virgen concebirá', 'un niño nos ha nacido, y el gobierno estará sobre sus hombros', 'será llamado Admirable Consejero, Dios Fuerte, Padre Eterno, Príncipe de Paz'.\n\nEl Siervo Sufriente de Isaías 53 — escrito 700 años antes de Cristo — describe a alguien que 'fue herido por nuestras transgresiones, molido por nuestras iniquidades', que 'como cordero fue llevado al matadero'. Es el texto bíblico citado con más frecuencia en el Nuevo Testamento en relación con Jesús.\n\nMiqueas, contemporáneo de Isaías, anuncia que el Mesías nacerá en Belén — 'demasiado pequeña para estar entre los clanes de Judá'. Cuando los magos llegan ante Herodes preguntando dónde nacerá el rey de los judíos, son los sacerdotes quienes citan Miqueas 5:2.",
+    books:["Isaías","Miqueas","Nahum","Habacuc","Sofonías"]
+  },
+  {
+    era:"Caída de Samaria y Reforma de Josías",
+    date:"~722–609 a.C.",
+    desc:"En 722 a.C., el rey asirio Sargón II conquista Samaria y deporta a las diez tribus del norte — sustituyéndolas por pueblos de otras regiones del imperio. Esa mezcla producirá a los samaritanos, despreciados por los judíos puros siglos después. Las diez tribus desaparecen de la historia — son las llamadas 'diez tribus perdidas de Israel', que generaron especulaciones durante milenios sobre su paradero.\n\nManasés, rey de Judá durante 55 años (el reinado más largo), fue el peor rey que Judá conoció: introdujo sacrificios de niños, adivinación, brujería e ídolos dentro del propio Templo. Pero al final de su vida, capturado por los asirios, se humilló y Dios lo restauró. Es uno de los episodios de arrepentimiento más sorprendentes de la Biblia.\n\nJosías, nieto de Manasés, subió al trono a los 8 años. A los 26, durante reformas en el Templo, un escriba encuentra un libro — probablemente Deuteronomio — que se había perdido. Cuando Josías escucha el texto leído, rasga sus vestiduras en señal de duelo. 'Nuestras generaciones no han cumplido nada de esto.' Sigue la mayor reforma religiosa de la historia de Judá: destrucción de ídolos, de los altares paganos, de las prostitutas sagradas, incluso de la serpiente de bronce de Moisés — que el pueblo había comenzado a adorar.\n\nJosías muere en una batalla innecesaria contra Egipto en 609 a.C. El pueblo llora — Jeremías compone lamentos por él.",
+    books:["2 Reyes 18–23","2 Crónicas 29–35","Jeremías","Habacuc","Sofonías"]
+  },
+  {
+    era:"Jeremías y la Caída de Jerusalén",
+    date:"~627–586 a.C.",
+    desc:"Jeremías fue llamado antes de nacer — 'antes de formarte en el vientre, ya te conocía'. E inmediatamente protestó: 'Ah, Señor, no sé hablar, porque soy apenas un joven.' Fue el profeta menos escuchado y más perseguido de la Biblia.\n\nDurante 40 años predicó el mismo mensaje: rindanse a Babilonia, esto es el juicio de Dios, no resistan. Nadie quiso escuchar. Fue encarcelado, arrojado a una cisterna lodosa, se le prohibió entrar al Templo, y vio su rollo de profecías quemado por el rey hoja por hoja frente al fuego. Lo dictó todo de nuevo al escriba Baruc.\n\nEl texto más conmovedor es Jeremías 32: durante el sitio babilónico de Jerusalén — cuando la ciudad está prácticamente perdida — Dios instruye a Jeremías a comprar un campo en Anatot. 'Pues así dice el Señor: todavía se comprarán campos en esta tierra.' Es un acto de fe absurdo en medio de la catástrofe.\n\nLa caída de Jerusalén en 586 a.C. se narra en 2 Reyes 25 con una sobriedad devastadora: el templo quemado, las murallas derribadas, los tesoros llevados, el rey Sedequías capturado — sus hijos muertos delante de él, sus ojos arrancados, llevado encadenado a Babilonia. La última imagen que vio fue la muerte de sus propios hijos.\n\nJeremías quedó entre los pobres dejados en la tierra destruida. Lamentaciones — cinco poemas sobre la caída — probablemente son suyos.",
+    books:["Jeremías","Lamentaciones"]
+  },
+  {
+    era:"El Exilio en Babilonia",
+    date:"~605–539 a.C.",
+    desc:"El exilio babilónico fue el trauma definitivo de Israel. Sin tierra, sin Templo, sin rey — los tres anclajes de la identidad nacional habían desaparecido. ¿Cómo cantar los cánticos del Señor en tierra extraña? El Salmo 137 registra la desesperación con brutalidad poética: 'junto a los ríos de Babilonia nos sentamos y llorábamos al acordarnos de Sión. En los álamos colgamos nuestras arpas.'\n\nDaniel fue deportado en la primera oleada, en 605 a.C., siendo aún joven — probablemente adolescente. Rechazó la comida del rey (que habría sido ofrecida a ídolos) y propuso una prueba de diez días con vegetales y agua. Salió más sano. Es una de las primeras historias de resistencia cultural en la Biblia.\n\nEl horno ardiente (Daniel 3) fue calentado siete veces más de lo normal — tanto que mató a los soldados que arrojaron a Sadrac, Mesac y Abed-nego. Pero un cuarto hombre fue visto caminando con ellos en las llamas. Nabucodonosor preguntó: '¿no arrojamos a tres hombres atados? ¿Por qué veo a cuatro, sueltos, y el cuarto tiene la apariencia de un hijo de los dioses?'\n\nEzequiel recibió sus visiones en el exilio — junto al río Quebar. Su visión inaugural (el carro del trono, los cuatro seres vivientes, las ruedas dentro de ruedas) es tan compleja que los rabinos prohibían estudiarla antes de los 30 años. El valle de los huesos secos (Ezequiel 37) se convirtió en símbolo universal de esperanza: '¿Pueden estos huesos vivir?' — y viven.",
+    books:["Daniel","Ezequiel","Isaías 40–55"]
+  },
+  {
+    era:"Isaías 40–66 — El Libro del Consuelo",
+    date:"~550–540 a.C.",
+    desc:"El giro de Isaías en el capítulo 40 es uno de los más dramáticos de la literatura bíblica. Tras 39 capítulos de juicio, la apertura del capítulo 40 es: 'Consuelen, consuelen a mi pueblo, dice su Dios. Hablen al corazón de Jerusalén y proclamen que ha terminado su tiempo de servidumbre.'\n\nIsaías 40–55 es llamado por muchos estudiosos Deutero-Isaías, proponiendo que fue escrito por un discípulo de Isaías durante el exilio. La cuestión se debate académicamente — pero el contenido es innegablemente extraordinario.\n\nLos cuatro 'Cánticos del Siervo' (42, 49, 50 y 53) describen a una figura misteriosa que sufre por los demás. El clímax es Isaías 53: 'Fue despreciado y rechazado por los hombres, varón de dolores, experimentado en el sufrimiento... pero fue traspasado por nuestras rebeliones, fue molido por nuestras iniquidades.' Ningún texto del Antiguo Testamento ha sido más citado en el Nuevo Testamento en relación con Jesús.\n\nIsaías 55 es uno de los pasajes más hermosos de la Biblia: '¡Vengan, todos los que tienen sed, vengan a las aguas; y los que no tienen dinero, vengan, compren y coma!' — una invitación gratuita y total. 'Porque mis pensamientos no son los pensamientos de ustedes, ni sus caminos son mis caminos, dice el Señor. Así como los cielos son más altos que la tierra, así mis caminos son más altos que los caminos de ustedes.'",
+    books:["Isaías 40–66"]
+  },
+  {
+    era:"El Retorno del Exilio",
+    date:"~539–400 a.C.",
+    desc:"En 539 a.C., Ciro II de Persia conquista Babilonia sin batalla — la ciudad simplemente abrió sus puertas. Era el imperio más grande del mundo hasta entonces. Y Ciro hizo algo extraordinario: emitió un decreto permitiendo que todos los pueblos exiliados regresaran a sus tierras y reconstruyeran sus templos. Isaías había llamado a Ciro por nombre 150 años antes de que naciera (Isaías 44:28 y 45:1) — y lo llamó 'mi ungido', 'mi pastor'.\n\nNo todos los judíos regresaron. Muchos habían construido vidas en Babilonia. Algunos se quedaron — y sus comunidades persistirían por siglos (la comunidad judía de Babilonia produciría el Talmud Babilónico en el siglo V d.C.).\n\nNehemías era copero del rey persa Artajerjes en Susa — una posición de confianza e influencia en la corte. Al oír que las murallas de Jerusalén estaban destruidas y las puertas quemadas, llora, ayuna y ora durante días. Luego pide permiso al rey. La reconstrucción de las murallas en 52 días, con trabajadores cargando ladrillos con una mano y sosteniendo espadas con la otra, es una de las historias de liderazgo más citadas en estudios organizacionales modernos.\n\nMalaquías — el último profeta del Antiguo Testamento — cierra con una promesa y un misterio: 'Enviaré al profeta Elías antes de que llegue el día grande y terrible del Señor.' Y luego, silencio. Cuatrocientos años sin voz profética.",
+    books:["Esdras","Nehemías","Ester","Hageo","Zacarías","Malaquías"]
+  },
+  {
+    era:"Los Cuatrocientos Años de Silencio",
+    date:"~400–4 a.C.",
+    desc:"Ningún libro bíblico cubre este período — pero el mundo cambió completamente. Alejandro Magno conquistó el Imperio Persa en una serie de campañas relámpago entre 334 y 323 a.C. Murió a los 32 años, sin heredero. Su imperio se dividió entre sus generales — los Ptolomeos en Egipto y los Seléucidas en Siria y Mesopotamia controlaron Israel por turnos.\n\nLa helenización fue profunda: el griego koiné se convirtió en la lengua franca del Mediterráneo. La Biblia hebrea fue traducida al griego en Alejandría — la Septuaginta (LXX), completada alrededor del año 200 a.C. Es la versión que Jesús y los apóstoles citaban con frecuencia.\n\nEn 175 a.C., Antíoco IV Epífanes intentó erradicar el judaísmo: prohibió la Torá, la circuncisión y el sábado, y sacrificó un cerdo en el altar del Templo — la 'Abominación Desoladora' de la que hablaba Daniel. Esto generó la revuelta de los Macabeos, liderada por Judas Macabeo. Los judíos vencieron — y eso es lo que celebra la fiesta de Janucá: la rededicación del Templo.\n\nRoma entró en escena en 63 a.C., cuando Pompeyo conquistó Jerusalén. Herodes el Grande — un idumeo al servicio de Roma — fue nombrado rey en 37 a.C. Reconstruyó el Templo a escala monumental: el Monte del Templo que existe hoy es su obra de ingeniería. Murió en 4 a.C. — el mismo año estimado del nacimiento de Jesús.",
+    books:["(período intertestamentario — no cubierto por la Biblia canónica)"]
+  },
+  {
+    era:"El Nacimiento y la Vida de Jesús",
+    date:"~4 a.C.–30 d.C.",
+    desc:"Jesús nació en Belén de Judá, cumpliendo la profecía de Miqueas 5:2. Los cuatro Evangelios narran su vida desde ángulos diferentes: Mateo escribe para judíos y muestra a Jesús como el Mesías prometido, cumpliendo las profecías del Antiguo Testamento. Marcos es el más corto y acelerado — usa la palabra 'inmediatamente' más de 40 veces. Lucas, médico e investigador, escribe el relato más literario, con atención especial a las mujeres, los pobres y los marginados. Juan es el más teológico: empieza no con el nacimiento, sino con la eternidad — 'En el principio era el Verbo'.\n\nJesús creció en Nazaret — una aldea insignificante en Galilea, despreciada incluso por otros galileos. Cuando Natanael oyó que el Mesías venía de allí, respondió: '¿Puede salir algo bueno de Nazaret?' Su padre adoptivo José era tekton — palabra griega generalmente traducida como 'carpintero', pero que designaba a cualquier trabajador de la construcción, posiblemente en piedra.\n\nEl bautismo de Jesús por Juan en el Jordán inaugura su ministerio público con una escena trinitaria: el Hijo en las aguas, el Espíritu descendiendo como paloma, y la voz del Padre — 'Este es mi Hijo amado, en quien me he complacido.' De inmediato es llevado al desierto por 40 días — haciendo eco de los 40 años de Israel en el desierto.\n\nSus doce discípulos eran, en su mayoría, pescadores galileos sin educación rabínica formal. Pedro, Andrés, Santiago y Juan fueron llamados mientras trabajaban. Mateo era cobrador de impuestos — profesión odiada. Simón era zelote — grupo político que predicaba resistencia violenta contra Roma. Jesús los reunió a todos en la misma mesa.",
+    books:["Mateo","Marcos","Lucas","Juan"]
+  },
+  {
+    era:"Las Enseñanzas de Jesús",
+    date:"~27–30 d.C.",
+    desc:"El Sermón del Monte (Mateo 5–7) es el discurso más largo de Jesús que se registra. Comienza con las Bienaventuranzas — ocho declaraciones de bendición que invierten todos los valores del mundo: bienaventurados los pobres en espíritu, los mansos, los que lloran, los perseguidos. 'El mundo dice: malditos. Yo digo: bienaventurados.'\n\nLas parábolas son la forma de enseñanza más característica de Jesús — historias simples con capas de significado. El Hijo Pródigo (Lucas 15) es considerada por muchos la mejor historia jamás contada: un hijo que desperdicia todo, vuelve avergonzado — y el padre lo ve 'todavía lejos' y corre a su encuentro. Que un padre corriera era indigno para un anciano en la cultura mediterránea. Jesús subvierte las expectativas deliberadamente.\n\nJesús hizo afirmaciones que ningún profeta había hecho: 'Yo soy el camino, la verdad y la vida.' 'Antes de que Abraham existiera, Yo soy.' (La forma verbal 'Yo soy' — Ego eimi — es la misma usada en la Septuaginta para el nombre divino.) Los líderes religiosos lo acusaron de blasfemia por esto — entendieron perfectamente lo que estaba diciendo.\n\nLa resurrección de Lázaro (Juan 11) es la séptima y mayor señal del Evangelio de Juan. Antes de ordenar que se quitara la piedra, Jesús llora — el versículo más corto de la Biblia: 'Jesús llteró' (Juan 11:35). El Dios que creó el universo, llteró ante una tumba.",
+    books:["Mateo","Marcos","Lucas","Juan"]
+  },
+  {
+    era:"La Pasión, Muerte y Resurrección",
+    date:"~30 d.C.",
+    desc:"La Última Cena ocurrió en la noche de la Pascua judía — o en la víspera, según el Evangelio. Jesús tomó el pan y el vino de la comida pascual y los reinterpretó: 'Este es mi cuerpo... Esta es mi sangre del nuevo pacto.' Era un ritual de 1.400 años siendo releído con nuevos ojos.\n\nLa traición de Judas por 30 monedas de plata cumple la profecía de Zacarías 11:12-13 — el precio de un esclavo, 'el precio espléndido en que me valoraron'. Judas luego arrojó el dinero en el Templo y salió.\n\nLa crucifixión era la pena capital más humillante del Imperio Romano — reservada para esclavos y los peores criminales. La víctima moría por asfixia progresiva: para respirar, debía levantarse apoyándose en los pies clavados, agotándose cada vez más. En las cruces había dos inscripciones: en latín, griego y hebreo — 'Jesús de Nazaret, Rey de los Judíos'. Los sacerdotes pidieron a Pilato que la cambiara a 'él dijo ser rey'. Pilato respondió: 'Lo que escribí, escrito está.'\n\nLa resurrección es el evento central del Nuevo Testamento. Pablo escribe en 1 Corintios 15: 'Si Cristo no resucitó, nuestra predicación es inútil, y también es inútil la fe de ustedes.' Los primeros testigos fueron mujeres — en un mundo donde el testimonio femenino no era válido en un tribunal. Si la historia fuera inventada, los inventores no habrían elegido a mujeres como testigos primarios.",
+    books:["Mateo 26–28","Marcos 14–16","Lucas 22–24","Juan 13–21"]
+  },
+  {
+    era:"Pentecostés y el Nacimiento de la Iglesia",
+    date:"~30 d.C.",
+    desc:"Cincuenta días después de la resurrección, en el Pentecostés judío (Shavuot — celebración de la entrega de la Ley en el Sinaí), los discípulos estaban reunidos cuando 'de repente vino del cielo un ruido como de un viento impetuoso' y 'lenguas como de fuego' se posaron sobre cada uno. Comenzaron a hablar en lenguas que no conocían — y visitantes de toda la diáspora judía escucharon el mensaje en sus propios idiomas.\n\nEl discurso de Pedro ese día cita al profeta Joel ('derramaré mi Espíritu sobre toda carne'), el Salmo 16 y el Salmo 110. Tres mil personas fueron bautizadas. La Iglesia había nacido — no como institución, sino como comunidad: 'perseveraban en la doctrina de los apóstoles, en la comunión, en el partimiento del pan y en las oraciones.'\n\nLa persecución comenzó temprano. Esteban, el primer mártir cristiano, fue apedreado tras un discurso que recorrió toda la historia de Israel. Entre los que aprobaron su muerte había un fariseo llamado Saulo de Tarso — que pronto sería el mayor propagador de la fe que perseguía.\n\nLa conversión de Pablo en el camino a Damasco (Hechos 9) se narra tres veces en el libro de Hechos — indicando su importancia. Una luz cegadora, una voz: 'Saulo, Saulo, ¿por qué me persigues?' Pablo pregunta: '¿Quién eres, Señor?' La respuesta: 'Yo soy Jesús, a quien tú persigues.' Ciego durante tres días, sin comer ni beber, todo lo que sabía sobre Dios se reconfiguró.",
+    books:["Hechos 1–9"]
+  },
+  {
+    era:"Los Viajes Misioneros de Pablo",
+    date:"~46–62 d.C.",
+    desc:"Pablo realizó tres grandes viajes misioneros a lo largo de unos 15 años, fundando iglesias en ciudades estratégicas del Imperio Romano: Antioquía, Chipre, Éfeso, Filipos, Tesalónica, Corinto, Atenas. Viajaba por tierra y mar, enfrentando naufragios, azotes, apedreamientos, prisiones — enumerados por él mismo en 2 Corintios 11 con una ironía seca.\n\nEn Atenas (Hechos 17), Pablo habló en el Areópago — el tribunal filosófico de la ciudad más intelectual del mundo antiguo — y citó a poetas griegos para hablar del Dios desconocido. Algunos se burlaron cuando mencionó la resurrección. Otros dijeron: 'Te oiremos otra vez sobre esto.' Pero algunos creyeron — incluido Dionisio, miembro del Areópago.\n\nLa carta a los Romanos se considera la obra maestra teológica de Pablo — quizás del Nuevo Testamento. Escrita antes de visitar Roma, es una exposición sistemática del evangelio: todos pecaron, la salvación viene por la fe, no por las obras de la Ley, el Espíritu Santo habita en los creyentes, nada puede separar del amor de Dios.\n\nRomanos 8:38-39 es uno de los versículos más citados de la historia: 'Porque estoy convencido de que ni la muerte, ni la vida, ni los ángeles, ni los principados, ni lo presente, ni lo por venir, ni los poderes, ni lo alto, ni lo profundo, ni ninguna otra cosa creada nos podrá separar del amor de Dios que es en Cristo Jesús, Señor nuestro.'",
+    books:["Hechos 10–28","Gálatas","1 y 2 Tesalonicenses","1 y 2 Corintios","Romanos"]
+  },
+  {
+    era:"Las Cartas de la Prisión y las Epístolas Generales",
+    date:"~60–95 d.C.",
+    desc:"Pablo escribió Efesios, Filipenses, Colosenses y Filemón desde la prisión — en Roma, esperando juicio ante el emperador. Filipenses, escrita en una prisión, es paradójicamente la carta más alegre del Nuevo Testamento: 'Regocíjense en el Señor siempre; otra vez digo, regocíjense.' El contexto hace que la afirmación sea extraordinaria.\n\nLa carta a Filemón es la más corta de Pablo — 25 versículos. Trata sobre un caso específico: Onésimo, esclavo fugitivo que se convirtió, necesita volver con su dueño Filemón. Pablo no ordena la libertad de Onésimo — pero intercede con sutileza: 'recíbelo, ya no como esclavo, sino como algo mejor que esclavo, como hermano querido.' Es llamada el primer argumento anti-esclavitud de la historia cristiana.\n\nHebreos — cuya autoría es desconocida (Pablo, Apolos, Bernabé y Priscila han sido sugeridos a lo largo de los siglos) — es una carta para judíos en crisis de fe. Usa el sistema sacrificial del Templo como trasfondo: Jesús es el sumo sacerdote definitivo, el sacrificio perfecto, el mediador del nuevo pacto. El capítulo 11 — 'la galería de los héroes de la fe' — enumera a Abraham, Moisés, Débora, Gedeón, Sansón con la frase repetida: 'por la fe...'\n\nLas cartas de Juan se caracterizan por una insistencia sorprendente: 'Dios es amor.' Juan 3:16 es el versículo más memorizado de la Biblia. 1 Juan 4:8 va más allá: no solo 'Dios ama' — 'Dios es amor'. Es una declaración sobre la naturaleza de Dios, no solo su comportamiento.",
+    books:["Efesios","Filipenses","Colosenses","Filemón","Hebreos","Santiago","1 y 2 Pedro","1, 2 y 3 Juan","Judas"]
+  },
+  {
+    era:"El Apocalipsis — La Visión Final",
+    date:"~95 d.C.",
+    desc:"Juan, el último apóstol vivo, tenía probablemente más de 80 años cuando fue exiliado en la isla de Patmos por el emperador Domiciano — quien exigía ser adorado como 'Señor y Dios'. Era un domingo cuando Juan recibió las visiones que componen el Apocalipsis.\n\nEl Apocalipsis utiliza un género literario llamado 'literatura apocalíptica' — común en el siglo I, con símbolos codificados que los lectores originales entendían y los perseguidores no. Los números tienen significado simbólico: 7 es perfección y plenitud, 12 es el pueblo de Dios (12 tribus, 12 apóstoles), 666 es imperfección triplicada — probablemente una referencia al emperador Nerón en código numérico hebreo (guematría).\n\nLas cartas a las siete iglesias (Apocalipsis 2–3) son documentos pastorales reales: cada una tiene elogios específicos, críticas específicas y promesas específicas. A la iglesia de Laodicea — 'ni fría ni caliente, sino tibia' — Jesús dice: 'He aquí, estoy a la puerta y llamo; si alguno oye mi voz y abre la puerta, entraré y cenaré con él.' Es una imagen de intimidad, no de juicio.\n\nEl clímax del libro — y de toda la Biblia — es Apocalipsis 21–22: 'Vi un cielo nuevo y una tierra nueva.' No es la humanidad subiendo al cielo — es el cielo bajando a la tierra. La Nueva Jerusalén desciende. 'He aquí, el tabernáculo de Dios está con los hombres; él habitará con ellos.' Lo que comenzó en el Jardín del Edén termina en una ciudad — Dios habitando con la humanidad, las naciones trayendo su gloria adentro. Las últimas palabras de la Biblia son una oración: 'Ven, Señor Jesús.'",
+    books:["Apocalipsis"]
+  },
+];
+
+// ─── TIPS ───
+const TIPS=[
+  {title:"Elige un horario fijo — y protégelo",text:"Quince minutos al día es poco tiempo, pero solo funciona si es un horario protegido. La mañana temprano funciona para la mayoría: el cerebro todavía está tranquilo, antes de las demandas del día. Una taza de café y la Biblia — eso es suficiente."},
+  {title:"Usa una aplicación bíblica en tu celular",text:"YouVersion y BibleGateway son gratuitas, tienen la NVI y otras versiones, y permiten ir directo al capítulo indicado. No pierdas tiempo buscando el pasaje en el libro físico — la fluidez es importante para mantener el hábito."},
+  {title:"Lee en voz alta de vez en cuando",text:"Las narrativas bíblicas se transmitieron originalmente de forma oral. Leer en voz alta activa partes distintas del cerebro y ayuda a fijar el contenido — especialmente en los libros poéticos (Salmos) y proféticos."},
+  {title:"Usa audiolibros en los días difíciles",text:"La Biblia en audio completa está disponible gratis en YouTube en varios idiomas. En los días sin energía para leer, escuchar cuenta. Cabe en cualquier traslado, caminata o tarea doméstica."},
+  {title:"Ten un cuaderno a mano",text:"Anota una frase o una pregunta por día. No tiene que ser profundo. Revisar las anotaciones al final del mes es una experiencia poderosa para notar todo lo que has absorbido."},
+  {title:"Si te atrasas, no empieces de cero",text:"¿Te saltaste una semana? Continúa donde quedaste. La tentación de 'empezar de nuevo desde Génesis' es la principal razón por la que las personas nunca terminan. El objetivo es llegar al Apocalipsis — no ser perfecta."},
+  {title:"Encuentra un compañero de lectura",text:"Comparte tu progreso con alguien. Saber que alguien te va a preguntar '¿leíste esta semana?' aumenta mucho la constancia. Los grupos de WhatsApp funcionan bien para esto."},
+  {title:"Por qué el orden cronológico transforma la lectura",text:"En la Biblia impresa, los profetas están decenas de páginas después de los eventos que comentaban. En orden cronológico, lees a Amós mientras lees 2 Reyes — y el texto cobra otra dimensión. Es como ver una serie en el orden correcto."},
+];
+
+// ─── STORAGE ───
+let saved = JSON.parse(localStorage.getItem('biblia52v4') || '{}');
+const TOTAL_DAYS = PHASES.reduce((a,ph)=>a+ph.weeks.reduce((b,w)=>b+w.days.length,0),0);
+
+function dayKey(weekN, dayIdx){ return `w${weekN}d${dayIdx}`; }
+
+function saveDay(weekN, dayIdx, val){
+  const k = dayKey(weekN, dayIdx);
+  if(val) saved[k]=1; else delete saved[k];
+  try{ localStorage.setItem('biblia52v4', JSON.stringify(saved)); }catch(e){}
+}
+
+function isDayDone(weekN, dayIdx){ return !!saved[dayKey(weekN, dayIdx)]; }
+
+function weekDoneCount(week){
+  return week.days.filter((_,i)=>isDayDone(week.n,i)).length;
+}
+
+function isWeekDone(week){ return weekDoneCount(week) === week.days.length; }
+
+function updateStats(){
+  const done = Object.keys(saved).length;
+  const pct = Math.round(done/TOTAL_DAYS*100);
+  document.getElementById('s-days').textContent = done;
+  document.getElementById('s-pct').textContent = pct+'%';
+  document.getElementById('s-left').textContent = TOTAL_DAYS-done;
+  document.getElementById('prog-bar').style.width = pct+'%';
+  document.getElementById('prog-label').textContent = done+' de '+TOTAL_DAYS+' días completados ('+pct+'%)';
+}
+
+function toggleDay(weekN, dayIdx, dayRowEl, weekItemEl){
+  const done = isDayDone(weekN, dayIdx);
+  saveDay(weekN, dayIdx, !done);
+  const inner = dayRowEl.querySelector('.day-check-inner');
+  if(!done){ dayRowEl.classList.add('day-done'); if(inner) inner.textContent='✓'; }
+  else { dayRowEl.classList.remove('day-done'); if(inner) inner.textContent=''; }
+  refreshWeekState(weekItemEl, weekN);
+  updateStats();
+}
+
+function refreshWeekState(weekItemEl, weekN){
+  const week = PHASES.flatMap(p=>p.weeks).find(w=>w.n===weekN);
+  if(!week) return;
+  const done = weekDoneCount(week);
+  const total = week.days.length;
+  const pill = weekItemEl.querySelector('.week-progress-pill');
+  if(pill) pill.textContent = done+'/'+total+' días';
+  if(done===total){ weekItemEl.classList.add('week-done'); }
+  else { weekItemEl.classList.remove('week-done'); }
+}
+
+const WEEK_PHRASES = [
+  "Conocer la Biblia es conocer a Dios mismo.",
+  "No son solo historias — son verdaderas enseñanzas.",
+  "Todo lo que viene de la Biblia dará fruto a su tiempo.",
+  "Cada capítulo es un paso más cerca de la sabiduría.",
+  "La Palabra de Dios es lámpara para tus pies.",
+  "Persevera — las grandes historias requieren tiempo para ser leídas.",
+  "La fe viene por el oír, y el oír por la Palabra.",
+  "Dios habló — y todavía habla a través de estas páginas.",
+  "Estás construyendo algo que dura para siempre.",
+  "La Palabra plantada en el corazón nunca se olvida.",
+  "Cada día de lectura es un acto de fe.",
+  "El que busca, encuentra — sigue buscando.",
+  "La Biblia no es un libro sobre el pasado — es sobre hoy.",
+  "Los que esperan en el Señor renuevan sus fuerzas.",
+  "Ninguna palabra de Dios vuelve vacía.",
+  "No estás leyendo sola — Él camina contigo.",
+  "La sabiduría comienza donde la humildad le permite entrar.",
+  "Cada historia aquí ya cambió el mundo — y puede cambiar el tuyo.",
+  "El corazón que busca a Dios siempre lo encuentra.",
+  "Lee despacio. Las mejores historias lo merecen.",
+  "La Palabra de Dios es viva y eficaz.",
+  "Estás a mitad de camino — ¡sigue adelante!",
+  "Las promesas de Dios son sí y amén.",
+  "Donde entra la Palabra, la oscuridad retrocede.",
+  "No te desanimes — cada página vale la pena.",
+  "La Biblia fue escrita para personas como tú.",
+  "Dios no abandona a quien lo busca de corazón.",
+  "Lo que lees hoy puede cambiar lo que decidas mañana.",
+  "La fe sin acción está incompleta — pero comienza con la Palabra.",
+  "Las grandes transformaciones empiezan con pequeñas lecturas diarias.",
+  "Estás escribiendo tu propia historia de fe.",
+  "El secreto está en no detenerse — ni en los días difíciles.",
+  "Cada profeta aquí fue un ser humano común. Como tú.",
+  "La oración y la Palabra juntas son imparables.",
+  "Dios conoce tu nombre — y quiere que tú conozcas el suyo.",
+  "Los Salmos fueron escritos en las horas más difíciles. Léelos con el corazón.",
+  "La Biblia sobrevivió a todos los imperios. Sobrevivirá a tu día agitado.",
+  "Jesús es el hilo que atraviesa cada página de esta Biblia.",
+  "La resurrección lo cambia todo — incluida la forma de leer el Antiguo Testamento.",
+  "Te estás acercando al final — y al principio de todo.",
+  "El Espíritu Santo ilumina lo que la mente sola no alcanza.",
+  "Cada epístola fue escrita para una comunidad real, con problemas reales.",
+  "Pablo escribió desde la prisión. Que nada te impida leer.",
+  "El amor descrito en 1 Corintios 13 es un desafío para toda la vida.",
+  "Hebreos 11 es la galería de los que vivieron por fe. Tú también puedes.",
+  "El Apocalipsis no es sobre el miedo — es sobre la victoria.",
+  "Llegaste hasta aquí por elección propia. Eso dice mucho.",
+  "La Nueva Jerusalén es la promesa que atraviesa toda la Biblia.",
+  "Nos acercamos — cada día de esta semana cuenta.",
+  "Estas son las últimas epístolas del canon. Lee con atención.",
+  "Penúltima semana. La Palabra todavía tiene mucho que revelar.",
+  "Última semana — llegaste hasta aquí. Eso es extraordinario.",
+];
+
+const DAY_NAMES = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"];
+
+function buildPhases(){
+  const cont = document.getElementById('phases-container');
+  const allWeeks = PHASES.flatMap(p => p.weeks);
+  const listDiv = document.createElement('div');
+  listDiv.style.cssText = 'display:flex;flex-direction:column;gap:1.5rem;';
+
+  allWeeks.forEach(w => {
+    const doneCount = weekDoneCount(w);
+    const total = w.days.length;
+    const wDone = doneCount === total;
+    const phrase = WEEK_PHRASES[(w.n - 1) % WEEK_PHRASES.length];
+    const weekNum = String(w.n).padStart(2,'0');
+
+    const daysHTML = w.days.map((day, di) => {
+      const dd = isDayDone(w.n, di);
+      const dayName = DAY_NAMES[di] || day.d;
+      return `<div class="day-row${dd?' day-done':''}" onclick="toggleDay(${w.n},${di},this,this.closest('.week-item'))">
+        <div class="day-main">
+          <div class="day-label">${dayName}</div>
+          <div class="day-reading">${day.r}</div>
+          <div class="day-note">${day.note}</div>
+        </div>
+        <div class="day-divider"></div>
+        <div class="day-check"><div class="day-check-inner">${dd?'✓':''}</div></div>
+      </div>`;
+    }).join('');
+
+    const weekEl = document.createElement('div');
+    weekEl.className = 'week-item' + (wDone?' week-done':'');
+    weekEl.innerHTML = `
+      <div class="week-card-header" onclick="this.closest('.week-item').classList.toggle('open')">
+        <div class="week-num-label">Semana ${weekNum}</div>
+        <div class="week-motivational">${phrase}</div>
+        <div class="week-progress-pill">${doneCount}/${total} días</div>
+      </div>
+      <div class="week-days">${daysHTML}</div>`;
+    listDiv.appendChild(weekEl);
+  });
+
+  cont.appendChild(listDiv);
+}
+
+function buildTimeline(){
+  const cont = document.getElementById('timeline-content');
+  TIMELINE.forEach(t => {
+    const books = t.books.map(b=>`<span class="tl-book">${b}</span>`).join('');
+    cont.innerHTML += `<div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">${t.date}</div>
+      <div class="tl-era">${t.era}</div>
+      <div class="tl-detail">${t.desc}</div>
+      <div class="tl-books">${books}</div>
+    </div>`;
+  });
+}
+
+function buildTips(){
+  const cont = document.getElementById('tips-content');
+  TIPS.forEach(t => {
+    cont.innerHTML += `<div class="tip-card"><div class="tip-title">${t.title}</div><div class="tip-text">${t.text}</div></div>`;
+  });
+}
+
+function showTab(id, btn){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function resetAll(){
+  if(confirm('¿Estás segura? Esto borrará todo tu progreso.')){
+    saved={};
+    try{ localStorage.removeItem('biblia52v4'); }catch(e){}
+    document.querySelectorAll('.day-row').forEach(r=>{ r.classList.remove('day-done'); const i=r.querySelector('.day-check-inner'); if(i) i.textContent=''; });
+    document.querySelectorAll('.week-item').forEach(w=>{ w.classList.remove('week-done'); });
+    document.querySelectorAll('.week-progress-pill').forEach(p=>{
+      const total = p.closest('.week-item').querySelectorAll('.day-row').length;
+      p.textContent='0/'+total+' días';
+    });
+    updateStats();
+  }
+}
+
+buildPhases();
+buildTimeline();
+buildTips();
+updateStats();
+</script>
+
+</body>
+</html>
